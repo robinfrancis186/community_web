@@ -68,20 +68,20 @@ const Dashboard = () => {
                 <Card className="lg:col-span-2 bg-gradient-to-br from-primary/20 to-surface border-primary/20">
                     <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                         <div className="flex-1">
-                            <h1 className="text-3xl font-bold text-white mb-2">
+                            <h1 className="text-3xl font-bold text-slate-900 mb-2">
                                 Welcome back, {user.name}! 👋
                             </h1>
-                            <p className="text-gray-300 mb-6">
+                            <p className="text-slate-600 mb-6">
                                 You're doing great! You've earned <span className="text-secondary font-bold">{user.points} STRIDE Points</span> this month.
                             </p>
 
                             <div className="space-y-2">
                                 <div className="flex justify-between text-sm">
-                                    <span className="text-white font-medium">Level {user.level}: {user.levelName}</span>
-                                    <span className="text-gray-400">{user.xp} / {user.nextLevelXp} XP</span>
+                                    <span className="text-slate-900 font-medium">Level {user.level}: {user.levelName}</span>
+                                    <span className="text-slate-500">{user.xp} / {user.nextLevelXp} XP</span>
                                 </div>
                                 <ProgressBar progress={user.xp} max={user.nextLevelXp} color="secondary" />
-                                <p className="text-xs text-gray-400 mt-1">550 XP to reach Level 4 (Collaborator)</p>
+                                <p className="text-xs text-slate-500 mt-1">550 XP to reach Level 4 (Collaborator)</p>
                             </div>
                         </div>
 
@@ -97,13 +97,13 @@ const Dashboard = () => {
                 </Card>
 
                 <Card className="flex flex-col justify-center space-y-4">
-                    <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                    <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
                         <Trophy className="text-yellow-400" size={20} />
                         Your Rank
                     </h3>
-                    <div className="text-4xl font-bold text-white">
+                    <div className="text-4xl font-bold text-slate-900">
                         #{user.rank}
-                        <span className="text-base font-normal text-gray-400 ml-2">Global</span>
+                        <span className="text-base font-normal text-slate-500 ml-2">Global</span>
                     </div>
                     <div className="flex items-center gap-2 text-green-400 text-sm">
                         <TrendingUp size={16} />
@@ -125,12 +125,12 @@ const Dashboard = () => {
                     { label: 'Impact Hours', value: '24h', icon: Zap, color: 'text-purple-400' },
                 ].map((stat, index) => (
                     <Card key={index} className="p-4 flex items-center gap-4" hover>
-                        <div className={`p-3 rounded-xl bg-white/5 ${stat.color}`}>
+                        <div className={`p-3 rounded-xl bg-slate-100 ${stat.color}`}>
                             <stat.icon size={24} />
                         </div>
                         <div>
-                            <div className="text-2xl font-bold text-white">{stat.value}</div>
-                            <div className="text-xs text-gray-400">{stat.label}</div>
+                            <div className="text-2xl font-bold text-slate-900">{stat.value}</div>
+                            <div className="text-xs text-slate-500">{stat.label}</div>
                         </div>
                     </Card>
                 ))}
@@ -140,7 +140,7 @@ const Dashboard = () => {
                 {/* Ongoing Challenges */}
                 <section className="lg:col-span-2 space-y-4">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-bold text-white">Ongoing Challenges</h2>
+                        <h2 className="text-xl font-bold text-slate-900">Ongoing Challenges</h2>
                         <Button variant="ghost" size="sm">View All</Button>
                     </div>
 
@@ -164,7 +164,7 @@ const Dashboard = () => {
                                             <Badge key={tag} variant="neutral">{tag}</Badge>
                                         ))}
                                     </div>
-                                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-primary transition-colors">
+                                    <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors">
                                         {challenge.title}
                                     </h3>
                                     <div className="flex items-center justify-between mt-4">
@@ -180,7 +180,7 @@ const Dashboard = () => {
                 {/* Community Highlights */}
                 <section className="space-y-4">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-bold text-white">Community Highlights</h2>
+                        <h2 className="text-xl font-bold text-slate-900">Community Highlights</h2>
                     </div>
 
                     <Card className="h-full">
@@ -190,18 +190,18 @@ const Dashboard = () => {
                                     <img
                                         src={item.avatar}
                                         alt={item.user}
-                                        className="w-10 h-10 rounded-full bg-white/5"
+                                        className="w-10 h-10 rounded-full bg-slate-100"
                                     />
                                     <div>
-                                        <p className="text-sm text-gray-300">
-                                            <span className="font-bold text-white">{item.user}</span> {item.action}
+                                        <p className="text-sm text-slate-600">
+                                            <span className="font-bold text-slate-900">{item.user}</span> {item.action}
                                         </p>
                                         <p className="text-xs text-gray-500 mt-1">{item.time}</p>
                                     </div>
                                 </div>
                             ))}
-                            <div className="pt-4 border-t border-white/10">
-                                <p className="text-center text-sm text-gray-400">
+                            <div className="pt-4 border-t border-slate-200">
+                                <p className="text-center text-sm text-slate-500">
                                     Join the conversation in <span className="text-primary cursor-pointer hover:underline">#general</span>
                                 </p>
                             </div>

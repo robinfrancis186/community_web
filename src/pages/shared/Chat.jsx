@@ -21,8 +21,8 @@ const Chat = () => {
         <div className="h-[calc(100vh-8rem)] flex gap-6">
             {/* Sidebar */}
             <Card className="w-64 flex flex-col p-0 overflow-hidden">
-                <div className="p-4 border-b border-white/10">
-                    <h2 className="font-bold text-white flex items-center gap-2">
+                <div className="p-4 border-b border-slate-200">
+                    <h2 className="font-bold text-slate-900 flex items-center gap-2">
                         <MessageSquare size={20} className="text-primary" />
                         Community
                     </h2>
@@ -32,7 +32,7 @@ const Chat = () => {
                     {channels.map((channel) => (
                         <button
                             key={channel.id}
-                            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors text-left"
+                            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors text-left"
                         >
                             <Hash size={16} />
                             <span>{channel.name}</span>
@@ -43,7 +43,7 @@ const Chat = () => {
                     {[1, 2, 3].map((i) => (
                         <button
                             key={i}
-                            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-colors text-left"
+                            className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors text-left"
                         >
                             <div className="w-2 h-2 rounded-full bg-green-500" />
                             <span>User {i}</span>
@@ -54,12 +54,12 @@ const Chat = () => {
 
             {/* Chat Area */}
             <Card className="flex-1 flex flex-col p-0 overflow-hidden">
-                <div className="p-4 border-b border-white/10 flex justify-between items-center">
+                <div className="p-4 border-b border-slate-200 flex justify-between items-center">
                     <div className="flex items-center gap-2">
-                        <Hash size={20} className="text-gray-400" />
-                        <h3 className="font-bold text-white">general</h3>
+                        <Hash size={20} className="text-slate-500" />
+                        <h3 className="font-bold text-slate-900">general</h3>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <div className="flex items-center gap-2 text-sm text-slate-500">
                         <Users size={16} />
                         <span>1,240 Members</span>
                     </div>
@@ -71,23 +71,23 @@ const Chat = () => {
                             <img src={msg.avatar} alt={msg.user} className="w-10 h-10 rounded-full bg-white/10" />
                             <div>
                                 <div className="flex items-baseline gap-2">
-                                    <span className="font-bold text-white hover:underline cursor-pointer">{msg.user}</span>
+                                    <span className="font-bold text-slate-900 hover:underline cursor-pointer">{msg.user}</span>
                                     <span className="text-xs text-gray-500">{msg.time}</span>
                                 </div>
-                                <p className="text-gray-300">{msg.content}</p>
+                                <p className="text-slate-600">{msg.content}</p>
                             </div>
                         </div>
                     ))}
                 </div>
 
-                <div className="p-4 border-t border-white/10">
+                <div className="p-4 border-t border-slate-200">
                     <div className="relative">
                         <input
                             type="text"
                             placeholder="Message #general"
-                            className="w-full bg-white/5 border border-white/10 rounded-xl pl-4 pr-12 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                            className="w-full bg-slate-100 border border-slate-200 rounded-xl pl-4 pr-12 py-3 text-slate-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50"
                         />
-                        <button className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-primary transition-colors">
+                        <button className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-slate-500 hover:text-primary transition-colors">
                             <Send size={20} />
                         </button>
                     </div>

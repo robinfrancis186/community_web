@@ -22,8 +22,8 @@ const Dashboard = () => {
         <div className="space-y-8">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Campus Dashboard</h1>
-                    <p className="text-gray-400">Overview of GEC Barton Hill's performance.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 mb-2">Campus Dashboard</h1>
+                    <p className="text-slate-500">Overview of GEC Barton Hill's performance.</p>
                 </div>
                 <Button variant="primary" icon={Calendar}>Create Event</Button>
             </div>
@@ -33,13 +33,13 @@ const Dashboard = () => {
                 {stats.map((stat, index) => (
                     <Card key={index} className="p-6" hover>
                         <div className="flex justify-between items-start mb-4">
-                            <div className={`p-3 rounded-xl bg-white/5 ${stat.color}`}>
+                            <div className={`p-3 rounded-xl bg-slate-100 ${stat.color}`}>
                                 <stat.icon size={24} />
                             </div>
                             <Badge variant="success">{stat.change}</Badge>
                         </div>
-                        <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
-                        <div className="text-sm text-gray-400">{stat.label}</div>
+                        <div className="text-3xl font-bold text-slate-900 mb-1">{stat.value}</div>
+                        <div className="text-sm text-slate-500">{stat.label}</div>
                     </Card>
                 ))}
             </div>
@@ -47,10 +47,10 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Impact Chart Placeholder */}
                 <Card className="lg:col-span-2 min-h-[300px] flex flex-col">
-                    <h3 className="text-xl font-bold text-white mb-6">Impact Growth</h3>
+                    <h3 className="text-xl font-bold text-slate-900 mb-6">Impact Growth</h3>
                     <div className="flex-1 flex items-end justify-between gap-4 px-4 pb-4">
                         {[40, 65, 45, 80, 55, 90, 75].map((h, i) => (
-                            <div key={i} className="w-full bg-white/5 rounded-t-xl relative group hover:bg-primary/20 transition-colors">
+                            <div key={i} className="w-full bg-slate-100 rounded-t-xl relative group hover:bg-primary/20 transition-colors">
                                 <div
                                     className="absolute bottom-0 left-0 right-0 bg-primary/50 rounded-t-xl transition-all duration-500 group-hover:bg-primary"
                                     style={{ height: `${h}%` }}
@@ -58,14 +58,14 @@ const Dashboard = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="flex justify-between text-sm text-gray-400 px-4">
+                    <div className="flex justify-between text-sm text-slate-500 px-4">
                         <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
                     </div>
                 </Card>
 
                 {/* Recent Activity */}
                 <Card>
-                    <h3 className="text-xl font-bold text-white mb-6">Recent Activity</h3>
+                    <h3 className="text-xl font-bold text-slate-900 mb-6">Recent Activity</h3>
                     <div className="space-y-6">
                         {recentActivity.map((item, index) => (
                             <div key={index} className="flex gap-3 relative">
@@ -74,8 +74,8 @@ const Dashboard = () => {
                                 )}
                                 <div className="w-4 h-4 rounded-full bg-primary mt-1.5 shrink-0 ring-4 ring-surface" />
                                 <div>
-                                    <p className="text-sm text-gray-300">
-                                        <span className="font-bold text-white">{item.user}</span> {item.action} <span className="text-primary">{item.target}</span>
+                                    <p className="text-sm text-slate-600">
+                                        <span className="font-bold text-slate-900">{item.user}</span> {item.action} <span className="text-primary">{item.target}</span>
                                     </p>
                                     <p className="text-xs text-gray-500 mt-1">{item.time}</p>
                                 </div>

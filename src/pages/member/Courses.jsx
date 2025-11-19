@@ -56,8 +56,8 @@ const Courses = () => {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-3xl font-bold text-white mb-2">Learning Tracks</h1>
-                <p className="text-gray-400">Master new skills and earn certificates.</p>
+                <h1 className="text-3xl font-bold text-slate-900 mb-2">Learning Tracks</h1>
+                <p className="text-slate-500">Master new skills and earn certificates.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -72,13 +72,13 @@ const Courses = () => {
                             {course.status === 'completed' && (
                                 <div className="absolute inset-0 bg-green-500/20 flex items-center justify-center">
                                     <div className="bg-green-500 rounded-full p-2">
-                                        <CheckCircle className="text-white" size={24} />
+                                        <CheckCircle className="text-slate-900" size={24} />
                                     </div>
                                 </div>
                             )}
                             {course.status === 'locked' && (
                                 <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                                    <Lock className="text-gray-400" size={24} />
+                                    <Lock className="text-slate-500" size={24} />
                                 </div>
                             )}
                         </div>
@@ -90,14 +90,14 @@ const Courses = () => {
                                         <Badge key={tag} variant="neutral">{tag}</Badge>
                                     ))}
                                 </div>
-                                <h3 className="text-xl font-bold text-white mb-1">{course.title}</h3>
-                                <p className="text-sm text-gray-400 line-clamp-2">{course.description}</p>
+                                <h3 className="text-xl font-bold text-slate-900 mb-1">{course.title}</h3>
+                                <p className="text-sm text-slate-500 line-clamp-2">{course.description}</p>
                             </div>
 
                             <div className="mt-4 space-y-3">
                                 {course.status !== 'locked' ? (
                                     <>
-                                        <div className="flex justify-between text-xs text-gray-400">
+                                        <div className="flex justify-between text-xs text-slate-500">
                                             <span>{course.completedModules} / {course.totalModules} Modules</span>
                                             <span>{course.progress}%</span>
                                         </div>

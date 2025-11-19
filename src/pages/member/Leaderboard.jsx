@@ -20,11 +20,11 @@ const Leaderboard = () => {
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Leaderboard</h1>
-                    <p className="text-gray-400">See who's leading the innovation movement.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 mb-2">Leaderboard</h1>
+                    <p className="text-slate-500">See who's leading the innovation movement.</p>
                 </div>
 
-                <div className="flex bg-surface p-1 rounded-xl border border-white/10">
+                <div className="flex bg-surface p-1 rounded-xl border border-slate-200">
                     {['global', 'campus', 'district'].map((tab) => (
                         <button
                             key={tab}
@@ -32,8 +32,8 @@ const Leaderboard = () => {
                             className={clsx(
                                 'px-4 py-2 rounded-lg text-sm font-medium transition-all capitalize',
                                 activeTab === tab
-                                    ? 'bg-primary text-white shadow-lg'
-                                    : 'text-gray-400 hover:text-white'
+                                    ? 'bg-primary text-slate-900 shadow-lg'
+                                    : 'text-slate-500 hover:text-slate-900'
                             )}
                         >
                             {tab}
@@ -55,8 +55,8 @@ const Leaderboard = () => {
                                 2
                             </div>
                         </div>
-                        <h3 className="text-lg font-bold text-white">{leaderboardData[1].name}</h3>
-                        <p className="text-sm text-gray-400 mb-2">{leaderboardData[1].campus}</p>
+                        <h3 className="text-lg font-bold text-slate-900">{leaderboardData[1].name}</h3>
+                        <p className="text-sm text-slate-500 mb-2">{leaderboardData[1].campus}</p>
                         <Badge variant="neutral" className="text-lg px-3 py-1">{leaderboardData[1].points} PTS</Badge>
                     </Card>
 
@@ -73,8 +73,8 @@ const Leaderboard = () => {
                                 1
                             </div>
                         </div>
-                        <h3 className="text-xl font-bold text-white">{leaderboardData[0].name}</h3>
-                        <p className="text-sm text-gray-400 mb-2">{leaderboardData[0].campus}</p>
+                        <h3 className="text-xl font-bold text-slate-900">{leaderboardData[0].name}</h3>
+                        <p className="text-sm text-slate-500 mb-2">{leaderboardData[0].campus}</p>
                         <Badge variant="warning" className="text-xl px-4 py-1 font-bold">{leaderboardData[0].points} PTS</Badge>
                     </Card>
 
@@ -84,12 +84,12 @@ const Leaderboard = () => {
                             <div className="w-20 h-20 rounded-full border-4 border-orange-700 overflow-hidden">
                                 <img src={leaderboardData[2].avatar} alt="" className="w-full h-full" />
                             </div>
-                            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-orange-700 text-white font-bold w-8 h-8 rounded-full flex items-center justify-center border-2 border-surface">
+                            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-orange-700 text-slate-900 font-bold w-8 h-8 rounded-full flex items-center justify-center border-2 border-surface">
                                 3
                             </div>
                         </div>
-                        <h3 className="text-lg font-bold text-white">{leaderboardData[2].name}</h3>
-                        <p className="text-sm text-gray-400 mb-2">{leaderboardData[2].campus}</p>
+                        <h3 className="text-lg font-bold text-slate-900">{leaderboardData[2].name}</h3>
+                        <p className="text-sm text-slate-500 mb-2">{leaderboardData[2].campus}</p>
                         <Badge variant="neutral" className="text-lg px-3 py-1">{leaderboardData[2].points} PTS</Badge>
                     </Card>
                 </div>
@@ -98,11 +98,11 @@ const Leaderboard = () => {
                 <Card className="lg:col-span-3">
                     <div className="flex items-center gap-4 mb-6">
                         <div className="relative flex-1">
-                            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                             <input
                                 type="text"
                                 placeholder="Search members..."
-                                className="bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 w-full"
+                                className="bg-slate-100 border border-slate-200 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 w-full"
                             />
                         </div>
                         <Button variant="outline" icon={Filter}>Filter</Button>
@@ -110,13 +110,13 @@ const Leaderboard = () => {
 
                     <div className="space-y-2">
                         {leaderboardData.slice(3).map((user, index) => (
-                            <div key={index} className="flex items-center justify-between p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div key={index} className="flex items-center justify-between p-4 rounded-xl bg-slate-100 hover:bg-white/10 transition-colors">
                                 <div className="flex items-center gap-4">
-                                    <span className="text-gray-400 font-bold w-6">{user.rank}</span>
+                                    <span className="text-slate-500 font-bold w-6">{user.rank}</span>
                                     <img src={user.avatar} alt="" className="w-10 h-10 rounded-full" />
                                     <div>
-                                        <h4 className="font-bold text-white">{user.name}</h4>
-                                        <p className="text-xs text-gray-400">{user.campus}</p>
+                                        <h4 className="font-bold text-slate-900">{user.name}</h4>
+                                        <p className="text-xs text-slate-500">{user.campus}</p>
                                     </div>
                                 </div>
                                 <div className="font-bold text-secondary">{user.points} PTS</div>
@@ -124,13 +124,13 @@ const Leaderboard = () => {
                         ))}
                         {/* Add more dummy rows for visual completeness */}
                         {[6, 7, 8].map((rank) => (
-                            <div key={rank} className="flex items-center justify-between p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div key={rank} className="flex items-center justify-between p-4 rounded-xl bg-slate-100 hover:bg-white/10 transition-colors">
                                 <div className="flex items-center gap-4">
-                                    <span className="text-gray-400 font-bold w-6">{rank}</span>
+                                    <span className="text-slate-500 font-bold w-6">{rank}</span>
                                     <div className="w-10 h-10 rounded-full bg-white/10" />
                                     <div>
-                                        <h4 className="font-bold text-white">Member Name</h4>
-                                        <p className="text-xs text-gray-400">Campus Name</p>
+                                        <h4 className="font-bold text-slate-900">Member Name</h4>
+                                        <p className="text-xs text-slate-500">Campus Name</p>
                                     </div>
                                 </div>
                                 <div className="font-bold text-secondary">1200 PTS</div>

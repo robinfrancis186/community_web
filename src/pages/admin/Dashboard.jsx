@@ -14,8 +14,8 @@ const Dashboard = () => {
     return (
         <div className="space-y-8">
             <div>
-                <h1 className="text-3xl font-bold text-white mb-2">Master Dashboard</h1>
-                <p className="text-gray-400">Global overview of STRIDE community impact.</p>
+                <h1 className="text-3xl font-bold text-slate-900 mb-2">Master Dashboard</h1>
+                <p className="text-slate-500">Global overview of STRIDE community impact.</p>
             </div>
 
             {/* Global Stats */}
@@ -23,13 +23,13 @@ const Dashboard = () => {
                 {stats.map((stat, index) => (
                     <Card key={index} className="p-6" hover>
                         <div className="flex justify-between items-start mb-4">
-                            <div className={`p-3 rounded-xl bg-white/5 ${stat.color}`}>
+                            <div className={`p-3 rounded-xl bg-slate-100 ${stat.color}`}>
                                 <stat.icon size={24} />
                             </div>
                             <Badge variant="success">{stat.change}</Badge>
                         </div>
-                        <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
-                        <div className="text-sm text-gray-400">{stat.label}</div>
+                        <div className="text-3xl font-bold text-slate-900 mb-1">{stat.value}</div>
+                        <div className="text-sm text-slate-500">{stat.label}</div>
                     </Card>
                 ))}
             </div>
@@ -38,11 +38,11 @@ const Dashboard = () => {
                 {/* Heatmap Placeholder */}
                 <Card className="lg:col-span-2 min-h-[400px] flex flex-col">
                     <div className="flex justify-between items-center mb-6">
-                        <h3 className="text-xl font-bold text-white">Campus Performance Heatmap</h3>
+                        <h3 className="text-xl font-bold text-slate-900">Campus Performance Heatmap</h3>
                         <Badge variant="neutral">Kerala Region</Badge>
                     </div>
-                    <div className="flex-1 bg-white/5 rounded-xl relative overflow-hidden flex items-center justify-center">
-                        <Map size={64} className="text-white/10" />
+                    <div className="flex-1 bg-slate-100 rounded-xl relative overflow-hidden flex items-center justify-center">
+                        <Map size={64} className="text-slate-900/10" />
                         <p className="text-gray-500 absolute bottom-4">Interactive Map Visualization Placeholder</p>
 
                         {/* Mock Heatmap Points */}
@@ -55,7 +55,7 @@ const Dashboard = () => {
 
                 {/* Top Performing Campuses */}
                 <Card>
-                    <h3 className="text-xl font-bold text-white mb-6">Top Campuses</h3>
+                    <h3 className="text-xl font-bold text-slate-900 mb-6">Top Campuses</h3>
                     <div className="space-y-4">
                         {[
                             { name: 'GEC Barton Hill', score: 98, trend: 'up' },
@@ -64,10 +64,10 @@ const Dashboard = () => {
                             { name: 'LBS Institute', score: 88, trend: 'up' },
                             { name: 'GEC Thrissur', score: 85, trend: 'up' },
                         ].map((campus, index) => (
-                            <div key={index} className="flex items-center justify-between p-3 rounded-xl bg-white/5">
+                            <div key={index} className="flex items-center justify-between p-3 rounded-xl bg-slate-100">
                                 <div className="flex items-center gap-3">
-                                    <div className="font-bold text-gray-400 w-4">{index + 1}</div>
-                                    <div className="font-medium text-white">{campus.name}</div>
+                                    <div className="font-bold text-slate-500 w-4">{index + 1}</div>
+                                    <div className="font-medium text-slate-900">{campus.name}</div>
                                 </div>
                                 <div className="font-bold text-secondary">{campus.score}</div>
                             </div>

@@ -53,8 +53,8 @@ const Events = () => {
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Events & Opportunities</h1>
-                    <p className="text-gray-400">Join workshops, hackathons, and sessions to earn points.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 mb-2">Events & Opportunities</h1>
+                    <p className="text-slate-500">Join workshops, hackathons, and sessions to earn points.</p>
                 </div>
 
                 <div className="flex gap-2">
@@ -89,29 +89,29 @@ const Events = () => {
                                     </Badge>
                                 </div>
                                 <div className="absolute bottom-3 left-3">
-                                    <Badge variant="success" className="bg-green-500/90 text-white border-transparent">
+                                    <Badge variant="success" className="bg-green-500/90 text-slate-900 border-transparent">
                                         +{event.points} Points
                                     </Badge>
                                 </div>
                             </div>
 
                             <div className="p-5 flex-1 flex flex-col">
-                                <h3 className="text-xl font-bold text-white mb-3">{event.title}</h3>
+                                <h3 className="text-xl font-bold text-slate-900 mb-3">{event.title}</h3>
 
                                 <div className="space-y-3 mb-6 flex-1">
-                                    <div className="flex items-center gap-3 text-gray-400 text-sm">
+                                    <div className="flex items-center gap-3 text-slate-500 text-sm">
                                         <Calendar size={16} className="text-primary" />
                                         <span>{event.date}</span>
                                     </div>
-                                    <div className="flex items-center gap-3 text-gray-400 text-sm">
+                                    <div className="flex items-center gap-3 text-slate-500 text-sm">
                                         <Clock size={16} className="text-primary" />
                                         <span>{event.time}</span>
                                     </div>
-                                    <div className="flex items-center gap-3 text-gray-400 text-sm">
+                                    <div className="flex items-center gap-3 text-slate-500 text-sm">
                                         <MapPin size={16} className="text-primary" />
                                         <span>{event.location} ({event.mode})</span>
                                     </div>
-                                    <div className="flex items-center gap-3 text-gray-400 text-sm">
+                                    <div className="flex items-center gap-3 text-slate-500 text-sm">
                                         <Users size={16} className="text-primary" />
                                         <span>{event.attendees} / {event.maxAttendees} Registered</span>
                                     </div>

@@ -16,11 +16,11 @@ const ProgressBar = ({ progress, max = 100, color = 'primary', showLabel = false
         <div className={className}>
             {showLabel && (
                 <div className="flex justify-between text-xs mb-1.5">
-                    <span className="text-gray-400">Progress</span>
-                    <span className="text-white font-medium">{Math.round(percentage)}%</span>
+                    <span className="text-slate-500">Progress</span>
+                    <span className="text-slate-900 font-medium">{Math.round(percentage)}%</span>
                 </div>
             )}
-            <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+            <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
                 <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${percentage}%` }}

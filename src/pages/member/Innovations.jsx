@@ -42,8 +42,8 @@ const Innovations = () => {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Innovation Repository</h1>
-                    <p className="text-gray-400">Explore and share innovative projects from the community.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 mb-2">Innovation Repository</h1>
+                    <p className="text-slate-500">Explore and share innovative projects from the community.</p>
                 </div>
                 <Button variant="primary" icon={Plus}>Submit Project</Button>
             </div>
@@ -52,11 +52,11 @@ const Innovations = () => {
             <Card className="p-4">
                 <div className="flex flex-col md:flex-row gap-4">
                     <div className="relative flex-1">
-                        <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                        <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                         <input
                             type="text"
                             placeholder="Search projects..."
-                            className="bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 w-full"
+                            className="bg-slate-100 border border-slate-200 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 w-full"
                         />
                     </div>
                     <Button variant="outline" icon={Filter}>Filters</Button>
@@ -81,12 +81,12 @@ const Innovations = () => {
                         <div className="p-5 flex-1 flex flex-col">
                             <div className="mb-4">
                                 <Badge variant="secondary" className="mb-2">{project.category}</Badge>
-                                <h3 className="text-xl font-bold text-white mb-1">{project.title}</h3>
-                                <p className="text-sm text-gray-400">by {project.author}</p>
+                                <h3 className="text-xl font-bold text-slate-900 mb-1">{project.title}</h3>
+                                <p className="text-sm text-slate-500">by {project.author}</p>
                             </div>
 
-                            <div className="mt-auto flex items-center justify-between pt-4 border-t border-white/10">
-                                <div className="flex gap-4 text-gray-400 text-sm">
+                            <div className="mt-auto flex items-center justify-between pt-4 border-t border-slate-200">
+                                <div className="flex gap-4 text-slate-500 text-sm">
                                     <button className="flex items-center gap-1 hover:text-primary transition-colors">
                                         <ThumbsUp size={16} />
                                         <span>{project.likes}</span>
@@ -96,7 +96,7 @@ const Innovations = () => {
                                         <span>{project.comments}</span>
                                     </button>
                                 </div>
-                                <button className="text-gray-400 hover:text-white transition-colors">
+                                <button className="text-slate-500 hover:text-slate-900 transition-colors">
                                     <Share2 size={18} />
                                 </button>
                             </div>

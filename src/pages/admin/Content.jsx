@@ -9,8 +9,8 @@ const Content = () => {
         <div className="space-y-8">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Content Management</h1>
-                    <p className="text-gray-400">Manage courses, badges, and resources.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 mb-2">Content Management</h1>
+                    <p className="text-slate-500">Manage courses, badges, and resources.</p>
                 </div>
             </div>
 
@@ -18,7 +18,7 @@ const Content = () => {
                 {/* Courses Section */}
                 <section className="space-y-4">
                     <div className="flex justify-between items-center">
-                        <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                        <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
                             <BookOpen className="text-primary" size={24} />
                             Courses
                         </h2>
@@ -33,8 +33,8 @@ const Content = () => {
                         ].map((course, index) => (
                             <Card key={index} className="p-4 flex items-center justify-between" hover>
                                 <div>
-                                    <h3 className="font-bold text-white">{course.title}</h3>
-                                    <p className="text-xs text-gray-400">{course.modules} Modules</p>
+                                    <h3 className="font-bold text-slate-900">{course.title}</h3>
+                                    <p className="text-xs text-slate-500">{course.modules} Modules</p>
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <Badge variant={course.status === 'Published' ? 'success' : 'warning'}>
@@ -53,7 +53,7 @@ const Content = () => {
                 {/* Badges Section */}
                 <section className="space-y-4">
                     <div className="flex justify-between items-center">
-                        <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                        <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
                             <Award className="text-yellow-400" size={24} />
                             Badges
                         </h2>
@@ -74,7 +74,7 @@ const Content = () => {
                                 <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${badge.color}`}>
                                     {badge.icon}
                                 </div>
-                                <span className="font-bold text-white text-sm">{badge.name}</span>
+                                <span className="font-bold text-slate-900 text-sm">{badge.name}</span>
                             </Card>
                         ))}
                     </div>

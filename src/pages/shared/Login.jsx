@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Users, Shield, School, ArrowRight } from 'lucide-react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
+import logo from '../../assets/logo.png';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -38,11 +39,11 @@ const Login = () => {
         <div className="min-h-screen bg-background flex items-center justify-center p-6">
             <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div>
-                    <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center font-bold text-white text-2xl mb-6">S</div>
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                    <img src={logo} alt="STRIDE" className="h-16 w-auto mb-6" />
+                    <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
                         Welcome to <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">STRIDE</span>
                     </h1>
-                    <p className="text-xl text-gray-400 mb-8">
+                    <p className="text-xl text-slate-500 mb-8">
                         A unified platform for inclusive innovation. Connect, learn, and create impact together.
                     </p>
                     <div className="flex gap-4">
@@ -52,7 +53,7 @@ const Login = () => {
                 </div>
 
                 <div className="space-y-4">
-                    <p className="text-sm text-gray-400 uppercase tracking-wider font-bold mb-2">Select your role to login</p>
+                    <p className="text-sm text-slate-500 uppercase tracking-wider font-bold mb-2">Select your role to login</p>
                     {roles.map((role) => (
                         <Card
                             key={role.id}
@@ -61,14 +62,14 @@ const Login = () => {
                             onClick={() => navigate(role.path)}
                         >
                             <div className="flex items-center gap-4">
-                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white ${role.color}`}>
+                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-slate-900 ${role.color}`}>
                                     <role.icon size={24} />
                                 </div>
                                 <div className="flex-1">
-                                    <h3 className="font-bold text-white group-hover:text-primary transition-colors">{role.title}</h3>
-                                    <p className="text-sm text-gray-400">{role.description}</p>
+                                    <h3 className="font-bold text-slate-900 group-hover:text-primary transition-colors">{role.title}</h3>
+                                    <p className="text-sm text-slate-500">{role.description}</p>
                                 </div>
-                                <ArrowRight className="text-gray-600 group-hover:text-white transition-colors" />
+                                <ArrowRight className="text-slate-400 group-hover:text-primary transition-colors" />
                             </div>
                         </Card>
                     ))}
