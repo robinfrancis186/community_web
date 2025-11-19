@@ -15,6 +15,7 @@ import MemberLeaderboard from './pages/member/Leaderboard';
 import MemberCourses from './pages/member/Courses';
 import MemberCertificates from './pages/member/Certificates';
 import MemberInnovations from './pages/member/Innovations';
+import MemberProfile from './pages/member/Profile';
 
 // Campus pages
 import CampusDashboard from './pages/campus/Dashboard';
@@ -48,7 +49,7 @@ function App() {
               <Route path="certificates" element={<MemberCertificates />} />
               <Route path="innovations" element={<MemberInnovations />} />
               <Route path="community" element={<Chat />} />
-              {/* Add other member routes here */}
+              <Route path="profile" element={<MemberProfile />} />
             </Route>
 
             <Route path="campus">

@@ -81,10 +81,22 @@ const Sidebar = () => {
       </nav>
 
       <div className="p-4 border-t border-slate-200 space-y-2">
-        <button className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-slate-100 hover:text-primary w-full transition-all">
-          <Settings size={20} />
-          <span className="font-medium">Settings</span>
-        </button>
+        {role === 'member' && (
+          <NavLink 
+            to="/member/profile"
+            className={({ isActive }) =>
+              clsx(
+                'flex items-center gap-3 px-4 py-3 rounded-xl transition-all w-full',
+                isActive
+                  ? 'bg-primary text-white'
+                  : 'text-slate-500 hover:bg-slate-100 hover:text-primary'
+              )
+            }
+          >
+            <Settings size={20} />
+            <span className="font-medium">Profile</span>
+          </NavLink>
+        )}
         <NavLink to="/" className="flex items-center gap-3 px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10 w-full transition-all">
           <LogOut size={20} />
           <span className="font-medium">Logout</span>

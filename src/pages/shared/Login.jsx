@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { supabase } from '../../lib/supabase';
 import { Mail, Lock, User, AlertCircle } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import logo from '../../assets/logo.png';
@@ -50,8 +51,19 @@ const Login = () => {
 
                 if (error) throw error;
 
-                // Will be redirected by ProtectedRoute based on user's role
-                navigate('/member/dashboard');
+                // Fetch profile to get role for redirect
+                if (data?.user) {
+                    const { data: profileData } = await supabase
+                        .from('profiles')
+                        .select('role')
+                        .eq('id', data.user.id)
+                        .single();
+                    
+                    const role = profileData?.role || 'member';
+                    navigate(`/${role}/dashboard`);
+                } else {
+                    navigate('/member/dashboard');
+                }
             }
         } catch (err) {
             setError(err.message || 'An error occurred. Please try again.');
