@@ -13,6 +13,9 @@ permissions:
 jobs:
   build-and-deploy:
     concurrency: ci-${{ github.ref }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,7 +23,7 @@ jobs:
 
       - name: Install and Build
         run: |
-          npm install
+          npm ci
           npm run build
 
       - name: Upload artifact
