@@ -1,17 +1,25 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
+import PageTransition from './PageTransition';
 
 const Layout = () => {
+    const location = useLocation();
+
     return (
-        <div className="min-h-screen bg-background text-white flex">
+        <div className="min-h-screen bg-background text-slate-900 flex">
             <Sidebar />
             <div className="flex-1 ml-64 flex flex-col">
                 <Navbar />
                 <main className="flex-1 mt-16 p-6 overflow-y-auto">
                     <div className="max-w-7xl mx-auto w-full">
-                        <Outlet />
+                        <AnimatePresence mode="wait">
+                            <PageTransition key={location.pathname} className="w-full">
+                                <Outlet />
+                            </PageTransition>
+                        </AnimatePresence>
                     </div>
                 </main>
             </div>

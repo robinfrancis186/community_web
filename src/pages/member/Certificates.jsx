@@ -57,7 +57,7 @@ const Certificates = () => {
                                     <Award size={48} className="text-primary mb-4" />
                                     <h3 className="text-xl font-serif font-bold text-slate-900 text-center">{cert.title}</h3>
                                     <p className="text-sm text-slate-500 mt-2">Awarded to Alex Johnson</p>
-                                    <p className="text-xs text-gray-500 mt-1">on {cert.date}</p>
+                                    <p className="text-xs text-slate-500 mt-1">on {cert.date}</p>
                                 </div>
                             </div>
 

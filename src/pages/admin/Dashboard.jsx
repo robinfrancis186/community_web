@@ -43,7 +43,7 @@ const Dashboard = () => {
                     </div>
                     <div className="flex-1 bg-slate-100 rounded-xl relative overflow-hidden flex items-center justify-center">
                         <Map size={64} className="text-slate-900/10" />
-                        <p className="text-gray-500 absolute bottom-4">Interactive Map Visualization Placeholder</p>
+                        <p className="text-slate-500 absolute bottom-4">Interactive Map Visualization Placeholder</p>
 
                         {/* Mock Heatmap Points */}
                         <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-red-500 rounded-full blur-md animate-pulse" />

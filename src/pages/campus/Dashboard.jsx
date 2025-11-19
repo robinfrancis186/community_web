@@ -77,7 +77,7 @@ const Dashboard = () => {
                                     <p className="text-sm text-slate-600">
                                         <span className="font-bold text-slate-900">{item.user}</span> {item.action} <span className="text-primary">{item.target}</span>
                                     </p>
-                                    <p className="text-xs text-gray-500 mt-1">{item.time}</p>
+                                    <p className="text-xs text-slate-500 mt-1">{item.time}</p>
                                 </div>
                             </div>
                         ))}

@@ -12,6 +12,8 @@ import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import Badge from '../../components/ui/Badge';
 import ProgressBar from '../../components/ui/ProgressBar';
+import { motion } from 'framer-motion';
+import { containerVariants, itemVariants } from '../../utils/animations';
 
 const Dashboard = () => {
     // Mock Data
@@ -62,79 +64,92 @@ const Dashboard = () => {
     ];
 
     return (
-        <div className="space-y-8">
+        <motion.div
+            className="space-y-8"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+        >
             {/* Welcome Section */}
             <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <Card className="lg:col-span-2 bg-gradient-to-br from-primary/20 to-surface border-primary/20">
-                    <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-                        <div className="flex-1">
-                            <h1 className="text-3xl font-bold text-slate-900 mb-2">
-                                Welcome back, {user.name}! 👋
-                            </h1>
-                            <p className="text-slate-600 mb-6">
-                                You're doing great! You've earned <span className="text-secondary font-bold">{user.points} STRIDE Points</span> this month.
-                            </p>
+                <motion.div variants={itemVariants} className="lg:col-span-2">
+                    <Card className="bg-gradient-to-br from-primary/20 to-surface border-primary/20">
+                        <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+                            <div className="flex-1">
+                                <h1 className="text-3xl font-bold text-slate-900 mb-2">
+                                    Welcome back, {user.name}! 👋
+                                </h1>
+                                <p className="text-slate-600 mb-6">
+                                    You're doing great! You've earned <span className="text-secondary font-bold">{user.points} STRIDE Points</span> this month.
+                                </p>
 
-                            <div className="space-y-2">
-                                <div className="flex justify-between text-sm">
-                                    <span className="text-slate-900 font-medium">Level {user.level}: {user.levelName}</span>
-                                    <span className="text-slate-500">{user.xp} / {user.nextLevelXp} XP</span>
+                                <div className="space-y-2">
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-slate-900 font-medium">Level {user.level}: {user.levelName}</span>
+                                        <span className="text-slate-500">{user.xp} / {user.nextLevelXp} XP</span>
+                                    </div>
+                                    <ProgressBar progress={user.xp} max={user.nextLevelXp} color="secondary" />
+                                    <p className="text-xs text-slate-500 mt-1">550 XP to reach Level 4 (Collaborator)</p>
                                 </div>
-                                <ProgressBar progress={user.xp} max={user.nextLevelXp} color="secondary" />
-                                <p className="text-xs text-slate-500 mt-1">550 XP to reach Level 4 (Collaborator)</p>
+                            </div>
+
+                            <div className="flex gap-3">
+                                <Button variant="primary" icon={Zap}>
+                                    Quick Action
+                                </Button>
+                                <Button variant="outline" icon={Target}>
+                                    View Goals
+                                </Button>
                             </div>
                         </div>
+                    </Card>
+                </motion.div>
 
-                        <div className="flex gap-3">
-                            <Button variant="primary" icon={Zap}>
-                                Quick Action
-                            </Button>
-                            <Button variant="outline" icon={Target}>
-                                View Goals
-                            </Button>
+                <motion.div variants={itemVariants}>
+                    <Card className="flex flex-col justify-center space-y-4">
+                        <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
+                            <Trophy className="text-yellow-400" size={20} />
+                            Your Rank
+                        </h3>
+                        <div className="text-4xl font-bold text-slate-900">
+                            #{user.rank}
+                            <span className="text-base font-normal text-slate-500 ml-2">Global</span>
                         </div>
-                    </div>
-                </Card>
-
-                <Card className="flex flex-col justify-center space-y-4">
-                    <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
-                        <Trophy className="text-yellow-400" size={20} />
-                        Your Rank
-                    </h3>
-                    <div className="text-4xl font-bold text-slate-900">
-                        #{user.rank}
-                        <span className="text-base font-normal text-slate-500 ml-2">Global</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-green-400 text-sm">
-                        <TrendingUp size={16} />
-                        <span>Top 5% this week</span>
-                    </div>
-                    <Button variant="ghost" size="sm" className="w-full justify-between group">
-                        View Leaderboard
-                        <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                </Card>
-            </section>
+                        <div className="flex items-center gap-2 text-green-400 text-sm">
+                            <TrendingUp size={16} />
+                            <span>Top 5% this week</span>
+                        </div>
+                        <Button variant="ghost" size="sm" className="w-full justify-between group">
+                            View Leaderboard
+                            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                    </Card>
+                </motion.div >
+            </section >
 
             {/* Quick Stats Row */}
-            <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                    { label: 'Events Attended', value: '12', icon: Calendar, color: 'text-blue-400' },
-                    { label: 'Badges Earned', value: '8', icon: Star, color: 'text-yellow-400' },
-                    { label: 'Courses Completed', value: '3', icon: Target, color: 'text-green-400' },
-                    { label: 'Impact Hours', value: '24h', icon: Zap, color: 'text-purple-400' },
-                ].map((stat, index) => (
-                    <Card key={index} className="p-4 flex items-center gap-4" hover>
-                        <div className={`p-3 rounded-xl bg-slate-100 ${stat.color}`}>
-                            <stat.icon size={24} />
-                        </div>
-                        <div>
-                            <div className="text-2xl font-bold text-slate-900">{stat.value}</div>
-                            <div className="text-xs text-slate-500">{stat.label}</div>
-                        </div>
-                    </Card>
-                ))}
-            </section>
+            < section className="grid grid-cols-2 md:grid-cols-4 gap-4" >
+                {
+                    [
+                        { label: 'Events Attended', value: '12', icon: Calendar, color: 'text-blue-400' },
+                        { label: 'Badges Earned', value: '8', icon: Star, color: 'text-yellow-400' },
+                        { label: 'Courses Completed', value: '3', icon: Target, color: 'text-green-400' },
+                        { label: 'Impact Hours', value: '24h', icon: Zap, color: 'text-purple-400' },
+                    ].map((stat, index) => (
+                        <motion.div key={index} variants={itemVariants}>
+                            <Card className="p-4 flex items-center gap-4" hover>
+                                <div className={`p-3 rounded-xl bg-slate-100 ${stat.color}`}>
+                                    <stat.icon size={24} />
+                                </div>
+                                <div>
+                                    <div className="text-2xl font-bold text-slate-900">{stat.value}</div>
+                                    <div className="text-xs text-slate-500">{stat.label}</div>
+                                </div>
+                            </Card>
+                        </motion.div>
+                    ))
+                }
+            </section >
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Ongoing Challenges */}
@@ -146,33 +161,35 @@ const Dashboard = () => {
 
                     <div className="grid md:grid-cols-2 gap-4">
                         {challenges.map((challenge) => (
-                            <Card key={challenge.id} className="p-0 group cursor-pointer" hover>
-                                <div className="h-32 relative overflow-hidden">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent z-10" />
-                                    <img
-                                        src={challenge.image}
-                                        alt={challenge.title}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                    />
-                                    <div className="absolute top-3 right-3 z-20">
-                                        <Badge variant="warning">{challenge.deadline}</Badge>
+                            <motion.div key={challenge.id} variants={itemVariants}>
+                                <Card className="p-0 group cursor-pointer" hover>
+                                    <div className="h-32 relative overflow-hidden">
+                                        <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent z-10" />
+                                        <img
+                                            src={challenge.image}
+                                            alt={challenge.title}
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                        <div className="absolute top-3 right-3 z-20">
+                                            <Badge variant="warning">{challenge.deadline}</Badge>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="p-5">
-                                    <div className="flex gap-2 mb-3">
-                                        {challenge.tags.map(tag => (
-                                            <Badge key={tag} variant="neutral">{tag}</Badge>
-                                        ))}
+                                    <div className="p-5">
+                                        <div className="flex gap-2 mb-3">
+                                            {challenge.tags.map(tag => (
+                                                <Badge key={tag} variant="neutral">{tag}</Badge>
+                                            ))}
+                                        </div>
+                                        <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors">
+                                            {challenge.title}
+                                        </h3>
+                                        <div className="flex items-center justify-between mt-4">
+                                            <span className="text-secondary font-bold text-sm">+{challenge.points} Points</span>
+                                            <Button variant="outline" size="sm">Join Now</Button>
+                                        </div>
                                     </div>
-                                    <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors">
-                                        {challenge.title}
-                                    </h3>
-                                    <div className="flex items-center justify-between mt-4">
-                                        <span className="text-secondary font-bold text-sm">+{challenge.points} Points</span>
-                                        <Button variant="outline" size="sm">Join Now</Button>
-                                    </div>
-                                </div>
-                            </Card>
+                                </Card>
+                            </motion.div>
                         ))}
                     </div>
                 </section>
@@ -196,7 +213,7 @@ const Dashboard = () => {
                                         <p className="text-sm text-slate-600">
                                             <span className="font-bold text-slate-900">{item.user}</span> {item.action}
                                         </p>
-                                        <p className="text-xs text-gray-500 mt-1">{item.time}</p>
+                                        <p className="text-xs text-slate-500 mt-1">{item.time}</p>
                                     </div>
                                 </div>
                             ))}
@@ -209,7 +226,7 @@ const Dashboard = () => {
                     </Card>
                 </section>
             </div>
-        </div>
+        </motion.div >
     );
 };
 

@@ -28,7 +28,7 @@ const Chat = () => {
                     </h2>
                 </div>
                 <div className="flex-1 overflow-y-auto p-2 space-y-1">
-                    <p className="px-2 py-1 text-xs font-bold text-gray-500 uppercase">Channels</p>
+                    <p className="px-2 py-1 text-xs font-bold text-slate-500 uppercase">Channels</p>
                     {channels.map((channel) => (
                         <button
                             key={channel.id}
@@ -39,7 +39,7 @@ const Chat = () => {
                         </button>
                     ))}
 
-                    <p className="px-2 py-1 text-xs font-bold text-gray-500 uppercase mt-4">Direct Messages</p>
+                    <p className="px-2 py-1 text-xs font-bold text-slate-500 uppercase mt-4">Direct Messages</p>
                     {[1, 2, 3].map((i) => (
                         <button
                             key={i}
@@ -72,7 +72,7 @@ const Chat = () => {
                             <div>
                                 <div className="flex items-baseline gap-2">
                                     <span className="font-bold text-slate-900 hover:underline cursor-pointer">{msg.user}</span>
-                                    <span className="text-xs text-gray-500">{msg.time}</span>
+                                    <span className="text-xs text-slate-500">{msg.time}</span>
                                 </div>
                                 <p className="text-slate-600">{msg.content}</p>
                             </div>
