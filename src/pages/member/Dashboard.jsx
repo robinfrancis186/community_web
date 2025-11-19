@@ -14,37 +14,46 @@ import Badge from '../../components/ui/Badge';
 import ProgressBar from '../../components/ui/ProgressBar';
 import { motion } from 'framer-motion';
 import { containerVariants, itemVariants } from '../../utils/animations';
+import { useAuth } from '../../contexts/AuthContext';
+import { useEvents } from '../../hooks/useEvents';
+import { useUserCourses } from '../../hooks/useCourses';
 
 const Dashboard = () => {
-    // Mock Data
-    const user = {
-        name: 'Alex Johnson',
-        level: 3,
-        levelName: 'Innovator',
-        xp: 2450,
-        nextLevelXp: 3000,
-        points: 1250,
-        rank: 42
+    const { user, profile } = useAuth();
+    const { events, loading: eventsLoading } = useEvents();
+    const { userCourses, loading: coursesLoading } = useUserCourses(user?.id);
+
+    // Calculate user stats from profile
+    const userData = {
+        name: profile?.full_name || 'User',
+        level: profile?.level || 1,
+        levelName: profile?.level >= 5 ? 'Expert' : profile?.level >= 3 ? 'Innovator' : 'Beginner',
+        xp: profile?.xp || 0,
+        nextLevelXp: (profile?.level || 1) * 1000,
+        points: profile?.xp || 0,
+        rank: 42 // TODO: Calculate from leaderboard
     };
 
-    const challenges = [
-        {
-            id: 1,
-            title: 'Inclusive Design Sprint',
-            deadline: '2 days left',
-            points: 500,
-            tags: ['Design', 'Accessibility'],
-            image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80'
-        },
-        {
-            id: 2,
-            title: 'Campus Impact Challenge',
-            deadline: '5 days left',
-            points: 300,
-            tags: ['Community', 'Volunteering'],
-            image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80'
-        }
-    ];
+    // Get upcoming events (limit to 2)
+    const upcomingEvents = events
+        .filter(event => event.status === 'upcoming')
+        .slice(0, 2)
+        .map(event => ({
+            id: event.id,
+            title: event.title,
+            deadline: new Date(event.start_date).toLocaleDateString(),
+            points: 500, // TODO: Add points field to events table
+            tags: [event.event_type, event.location].filter(Boolean),
+            image: event.image_url || 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80'
+        }));
+
+    // Calculate stats
+    const stats = {
+        eventsAttended: 12, // TODO: Count from event_registrations
+        badgesEarned: 8, // TODO: Count from badges table
+        coursesCompleted: userCourses.filter(uc => uc.completed).length,
+        impactHours: Math.floor((profile?.xp || 0) / 100) + 'h'
+    };
 
     const highlights = [
         {
@@ -77,19 +86,19 @@ const Dashboard = () => {
                         <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                             <div className="flex-1">
                                 <h1 className="text-3xl font-bold text-slate-900 mb-2">
-                                    Welcome back, {user.name}! 👋
+                                    Welcome back, {userData.name}! 👋
                                 </h1>
                                 <p className="text-slate-600 mb-6">
-                                    You're doing great! You've earned <span className="text-secondary font-bold">{user.points} STRIDE Points</span> this month.
+                                    You're doing great! You've earned <span className="text-secondary font-bold">{userData.points} STRIDE Points</span> this month.
                                 </p>
 
                                 <div className="space-y-2">
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-slate-900 font-medium">Level {user.level}: {user.levelName}</span>
-                                        <span className="text-slate-500">{user.xp} / {user.nextLevelXp} XP</span>
+                                        <span className="text-slate-900 font-medium">Level {userData.level}: {userData.levelName}</span>
+                                        <span className="text-slate-500">{userData.xp} / {userData.nextLevelXp} XP</span>
                                     </div>
-                                    <ProgressBar progress={user.xp} max={user.nextLevelXp} color="secondary" />
-                                    <p className="text-xs text-slate-500 mt-1">550 XP to reach Level 4 (Collaborator)</p>
+                                    <ProgressBar progress={userData.xp} max={userData.nextLevelXp} color="secondary" />
+                                    <p className="text-xs text-slate-500 mt-1">{userData.nextLevelXp - userData.xp} XP to reach Level {userData.level + 1}</p>
                                 </div>
                             </div>
 
@@ -112,7 +121,7 @@ const Dashboard = () => {
                             Your Rank
                         </h3>
                         <div className="text-4xl font-bold text-slate-900">
-                            #{user.rank}
+                            #{userData.rank}
                             <span className="text-base font-normal text-slate-500 ml-2">Global</span>
                         </div>
                         <div className="flex items-center gap-2 text-green-400 text-sm">
@@ -131,10 +140,10 @@ const Dashboard = () => {
             < section className="grid grid-cols-2 md:grid-cols-4 gap-4" >
                 {
                     [
-                        { label: 'Events Attended', value: '12', icon: Calendar, color: 'text-blue-400' },
-                        { label: 'Badges Earned', value: '8', icon: Star, color: 'text-yellow-400' },
-                        { label: 'Courses Completed', value: '3', icon: Target, color: 'text-green-400' },
-                        { label: 'Impact Hours', value: '24h', icon: Zap, color: 'text-purple-400' },
+                        { label: 'Events Attended', value: stats.eventsAttended.toString(), icon: Calendar, color: 'text-blue-400' },
+                        { label: 'Badges Earned', value: stats.badgesEarned.toString(), icon: Star, color: 'text-yellow-400' },
+                        { label: 'Courses Completed', value: stats.coursesCompleted.toString(), icon: Target, color: 'text-green-400' },
+                        { label: 'Impact Hours', value: stats.impactHours, icon: Zap, color: 'text-purple-400' },
                     ].map((stat, index) => (
                         <motion.div key={index} variants={itemVariants}>
                             <Card className="p-4 flex items-center gap-4" hover>
@@ -160,37 +169,43 @@ const Dashboard = () => {
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-4">
-                        {challenges.map((challenge) => (
-                            <motion.div key={challenge.id} variants={itemVariants}>
-                                <Card className="p-0 group cursor-pointer" hover>
-                                    <div className="h-32 relative overflow-hidden">
-                                        <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent z-10" />
-                                        <img
-                                            src={challenge.image}
-                                            alt={challenge.title}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                        />
-                                        <div className="absolute top-3 right-3 z-20">
-                                            <Badge variant="warning">{challenge.deadline}</Badge>
+                        {eventsLoading ? (
+                            <div className="col-span-2 text-center py-8 text-slate-500">Loading events...</div>
+                        ) : upcomingEvents.length === 0 ? (
+                            <div className="col-span-2 text-center py-8 text-slate-500">No upcoming events</div>
+                        ) : (
+                            upcomingEvents.map((challenge) => (
+                                <motion.div key={challenge.id} variants={itemVariants}>
+                                    <Card className="p-0 group cursor-pointer" hover>
+                                        <div className="h-32 relative overflow-hidden">
+                                            <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent z-10" />
+                                            <img
+                                                src={challenge.image}
+                                                alt={challenge.title}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            />
+                                            <div className="absolute top-3 right-3 z-20">
+                                                <Badge variant="warning">{challenge.deadline}</Badge>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="p-5">
-                                        <div className="flex gap-2 mb-3">
-                                            {challenge.tags.map(tag => (
-                                                <Badge key={tag} variant="neutral">{tag}</Badge>
-                                            ))}
+                                        <div className="p-5">
+                                            <div className="flex gap-2 mb-3">
+                                                {challenge.tags.map(tag => (
+                                                    <Badge key={tag} variant="neutral">{tag}</Badge>
+                                                ))}
+                                            </div>
+                                            <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors">
+                                                {challenge.title}
+                                            </h3>
+                                            <div className="flex items-center justify-between mt-4">
+                                                <span className="text-secondary font-bold text-sm">+{challenge.points} Points</span>
+                                                <Button variant="outline" size="sm">Join Now</Button>
+                                            </div>
                                         </div>
-                                        <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-primary transition-colors">
-                                            {challenge.title}
-                                        </h3>
-                                        <div className="flex items-center justify-between mt-4">
-                                            <span className="text-secondary font-bold text-sm">+{challenge.points} Points</span>
-                                            <Button variant="outline" size="sm">Join Now</Button>
-                                        </div>
-                                    </div>
-                                </Card>
-                            </motion.div>
-                        ))}
+                                    </Card>
+                                </motion.div>
+                            ))
+                        )}
                     </div>
                 </section>
 
