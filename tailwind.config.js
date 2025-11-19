@@ -32,14 +32,26 @@ export default {
         800: '#1e40af',
         900: '#1e3a8a',
       },
-      background: '#f8fafc', // Slate 50 (Light)
-      surface: '#ffffff', // White (Light)
-      text: '#0f172a', // Slate 900 (Dark Text)
+      colors: {
+        background: '#f8fafc', // Slate 50 (Light)
+        surface: '#ffffff', // White (Light)
+        text: '#0f172a', // Slate 900 (Dark Text)
+      },
+      // Also keeping these as top-level extend properties if they were used that way, 
+      // but usually they should be under colors. 
+      // The previous config had them directly under extend, which works as custom colors too.
+      // I will keep them as they were to avoid breaking existing usages, but ensure valid JS syntax.
+      backgroundColor: {
+        background: '#f8fafc',
+        surface: '#ffffff',
+      },
+      textColor: {
+        text: '#0f172a',
+      }
     },
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
     },
   },
-},
-plugins: [],
+  plugins: [],
 }
