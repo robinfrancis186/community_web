@@ -1,9 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
 
-const Card = ({ children, className, hover = false }) => {
+const Card = ({ children, className, hover = false, ...props }) => {
     return (
         <div
+            {...props}
             className={clsx(
                 'bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden',
                 hover && 'hover:border-primary/50 transition-colors duration-300 group',
