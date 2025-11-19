@@ -70,7 +70,7 @@ const Dashboard = () => {
                         {recentActivity.map((item, index) => (
                             <div key={index} className="flex gap-3 relative">
                                 {index !== recentActivity.length - 1 && (
-                                    <div className="absolute left-2 top-8 bottom-[-24px] w-0.5 bg-white/10" />
+                                    <div className="absolute left-2 top-8 bottom-[-24px] w-0.5 bg-slate-200" />
                                 )}
                                 <div className="w-4 h-4 rounded-full bg-primary mt-1.5 shrink-0 ring-4 ring-surface" />
                                 <div>

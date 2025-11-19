@@ -53,7 +53,7 @@ const Users = () => {
                                 <tr key={user.id} className="hover:bg-slate-100 transition-colors">
                                     <td className="p-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-full bg-white/10" />
+                                            <div className="w-8 h-8 rounded-full bg-slate-200" />
                                             <span className="font-medium text-slate-900">{user.name}</span>
                                         </div>
                                     </td>

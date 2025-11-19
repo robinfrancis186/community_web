@@ -110,7 +110,7 @@ const Leaderboard = () => {
 
                     <div className="space-y-2">
                         {leaderboardData.slice(3).map((user, index) => (
-                            <div key={index} className="flex items-center justify-between p-4 rounded-xl bg-slate-100 hover:bg-white/10 transition-colors">
+                            <div key={index} className="flex items-center justify-between p-4 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors">
                                 <div className="flex items-center gap-4">
                                     <span className="text-slate-500 font-bold w-6">{user.rank}</span>
                                     <img src={user.avatar} alt="" className="w-10 h-10 rounded-full" />
@@ -124,10 +124,10 @@ const Leaderboard = () => {
                         ))}
                         {/* Add more dummy rows for visual completeness */}
                         {[6, 7, 8].map((rank) => (
-                            <div key={rank} className="flex items-center justify-between p-4 rounded-xl bg-slate-100 hover:bg-white/10 transition-colors">
+                            <div key={rank} className="flex items-center justify-between p-4 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors">
                                 <div className="flex items-center gap-4">
                                     <span className="text-slate-500 font-bold w-6">{rank}</span>
-                                    <div className="w-10 h-10 rounded-full bg-white/10" />
+                                    <div className="w-10 h-10 rounded-full bg-slate-200" />
                                     <div>
                                         <h4 className="font-bold text-slate-900">Member Name</h4>
                                         <p className="text-xs text-slate-500">Campus Name</p>

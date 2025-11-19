@@ -68,7 +68,7 @@ const Chat = () => {
                 <div className="flex-1 overflow-y-auto p-4 space-y-6">
                     {messages.map((msg) => (
                         <div key={msg.id} className="flex gap-4 group">
-                            <img src={msg.avatar} alt={msg.user} className="w-10 h-10 rounded-full bg-white/10" />
+                            <img src={msg.avatar} alt={msg.user} className="w-10 h-10 rounded-full bg-slate-200" />
                             <div>
                                 <div className="flex items-baseline gap-2">
                                     <span className="font-bold text-slate-900 hover:underline cursor-pointer">{msg.user}</span>
