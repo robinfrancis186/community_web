@@ -1,26 +1,11 @@
 import React from 'react';
-import { Download, Share2, Award } from 'lucide-react';
+import { Download, Share2, Award, Loader2 } from 'lucide-react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
-import Badge from '../../components/ui/Badge';
+import { useCertificates } from '../../hooks/useCertificates';
 
 const Certificates = () => {
-    const certificates = [
-        {
-            id: 1,
-            title: 'Disability Sensitization',
-            date: 'Oct 15, 2025',
-            id_code: 'STRIDE-2025-DS-001',
-            image: 'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=800&q=80' // Placeholder for cert image
-        },
-        {
-            id: 2,
-            title: 'Inclusive Design Workshop',
-            date: 'Sep 20, 2025',
-            id_code: 'STRIDE-2025-IDW-045',
-            image: 'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=800&q=80'
-        }
-    ];
+    const { certificates, loading } = useCertificates();
 
     const badges = [
         { name: 'Early Adopter', icon: '🚀', color: 'bg-blue-500/20 text-blue-400' },
@@ -28,6 +13,14 @@ const Certificates = () => {
         { name: 'Top Contributor', icon: '⭐', color: 'bg-yellow-500/20 text-yellow-400' },
         { name: 'Problem Solver', icon: '🧩', color: 'bg-green-500/20 text-green-400' },
     ];
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-[400px]">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8">
@@ -48,32 +41,41 @@ const Certificates = () => {
 
             <section>
                 <h2 className="text-2xl font-bold text-slate-900 mb-4">Certificates</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {certificates.map((cert) => (
-                        <Card key={cert.id} className="p-0 group" hover>
-                            <div className="aspect-video bg-surface relative overflow-hidden">
-                                {/* Placeholder for Certificate Preview */}
-                                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 border-8 border-double border-slate-200 m-4">
-                                    <Award size={48} className="text-primary mb-4" />
-                                    <h3 className="text-xl font-serif font-bold text-slate-900 text-center">{cert.title}</h3>
-                                    <p className="text-sm text-slate-500 mt-2">Awarded to Alex Johnson</p>
-                                    <p className="text-xs text-slate-500 mt-1">on {cert.date}</p>
+                {certificates.length === 0 ? (
+                    <Card className="p-8 text-center">
+                        <Award size={48} className="mx-auto text-slate-300 mb-4" />
+                        <h3 className="text-lg font-medium text-slate-900 mb-2">No Certificates Yet</h3>
+                        <p className="text-slate-500 mb-4">Complete courses to earn certificates and showcase your skills.</p>
+                        <Button variant="primary" to="/member/courses">Browse Courses</Button>
+                    </Card>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {certificates.map((cert) => (
+                            <Card key={cert.id} className="p-0 group" hover>
+                                <div className="aspect-video bg-surface relative overflow-hidden">
+                                    {/* Certificate Preview */}
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center p-8 border-8 border-double border-slate-200 m-4 bg-white">
+                                        <Award size={48} className="text-primary mb-4" />
+                                        <h3 className="text-xl font-serif font-bold text-slate-900 text-center line-clamp-2">{cert.title}</h3>
+                                        <p className="text-sm text-slate-500 mt-2">Awarded for completion</p>
+                                        <p className="text-xs text-slate-500 mt-1">on {cert.date}</p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="p-4 bg-slate-100 flex items-center justify-between">
-                                <div>
-                                    <p className="text-xs text-slate-500">Certificate ID</p>
-                                    <p className="text-sm font-mono text-slate-900">{cert.id_code}</p>
+                                <div className="p-4 bg-slate-100 flex items-center justify-between">
+                                    <div>
+                                        <p className="text-xs text-slate-500">Certificate ID</p>
+                                        <p className="text-sm font-mono text-slate-900">{cert.id_code}</p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <Button variant="ghost" size="sm" icon={Download} />
+                                        <Button variant="ghost" size="sm" icon={Share2} />
+                                    </div>
                                 </div>
-                                <div className="flex gap-2">
-                                    <Button variant="ghost" size="sm" icon={Download} />
-                                    <Button variant="ghost" size="sm" icon={Share2} />
-                                </div>
-                            </div>
-                        </Card>
-                    ))}
-                </div>
+                            </Card>
+                        ))}
+                    </div>
+                )}
             </section>
         </div>
     );

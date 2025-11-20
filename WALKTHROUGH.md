@@ -77,5 +77,13 @@ View other users' details and connect.
     - Go to "Community".
     - Click "+" next to Direct Messages.
     - Search for a user and click to start a DM.
-    - Send a message.
-    - Verify the message appears immediately.
+    *   Go to "Members" page and verify the list of students in your campus loads.
+
+### Phase 7: Member Learning & Analytics
+1.  **Certificates**:
+    *   Complete a course (or manually set `completed=true` in `user_courses` table).
+    *   Go to "Certificates" page and verify the certificate appears.
+2.  **Campus Analytics**:
+    *   Log in as a Campus Lead.
+    *   Go to "Analytics" page.
+    *   Verify the "Impact Metrics" (Volunteer Hours) reflect the sum of member XP.
