@@ -8,8 +8,8 @@ const Card = ({ children, className, hover = false, glass = false, ...props }) =
             className={clsx(
                 'relative overflow-hidden rounded-2xl p-6',
                 glass
-                    ? 'bg-white/80 backdrop-blur-xl border border-white/20 shadow-glass'
-                    : 'bg-white border border-slate-200 shadow-soft',
+                    ? 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-glass'
+                    : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-soft',
                 hover && 'card-hover group cursor-pointer',
                 className
             )}

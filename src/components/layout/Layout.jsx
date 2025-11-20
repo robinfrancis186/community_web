@@ -4,12 +4,13 @@ import { AnimatePresence } from 'framer-motion';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import PageTransition from './PageTransition';
+import ContextualHelp from '../ui/ContextualHelp';
 
 const Layout = () => {
     const location = useLocation();
 
     return (
-        <div className="min-h-screen bg-background text-slate-900 flex">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white flex transition-colors duration-300">
             <Sidebar />
             <div className="flex-1 ml-64 flex flex-col">
                 <Navbar />
@@ -22,6 +23,7 @@ const Layout = () => {
                         </AnimatePresence>
                     </div>
                 </main>
+                <ContextualHelp />
             </div>
         </div>
     );

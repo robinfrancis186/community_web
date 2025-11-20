@@ -17,6 +17,7 @@ import { containerVariants, itemVariants } from '../../utils/animations';
 import { useAuth } from '../../contexts/AuthContext';
 import { useEvents } from '../../hooks/useEvents';
 import { useUserCourses } from '../../hooks/useCourses';
+import UpcomingEvents from '../../components/dashboard/UpcomingEvents';
 
 const Dashboard = () => {
     const { user, profile } = useAuth();
@@ -209,36 +210,41 @@ const Dashboard = () => {
                     </div>
                 </section>
 
-                {/* Community Highlights */}
-                <section className="space-y-4">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-bold text-slate-900">Community Highlights</h2>
-                    </div>
+                {/* Right Column */}
+                <section className="space-y-8">
+                    <UpcomingEvents />
 
-                    <Card className="h-full">
-                        <div className="space-y-6">
-                            {highlights.map((item) => (
-                                <div key={item.id} className="flex gap-3">
-                                    <img
-                                        src={item.avatar}
-                                        alt={item.user}
-                                        className="w-10 h-10 rounded-full bg-slate-100"
-                                    />
-                                    <div>
-                                        <p className="text-sm text-slate-600">
-                                            <span className="font-bold text-slate-900">{item.user}</span> {item.action}
-                                        </p>
-                                        <p className="text-xs text-slate-500 mt-1">{item.time}</p>
-                                    </div>
-                                </div>
-                            ))}
-                            <div className="pt-4 border-t border-slate-200">
-                                <p className="text-center text-sm text-slate-500">
-                                    Join the conversation in <span className="text-primary cursor-pointer hover:underline">#general</span>
-                                </p>
-                            </div>
+                    {/* Community Highlights */}
+                    <div>
+                        <div className="flex items-center justify-between mb-4">
+                            <h2 className="text-xl font-bold text-slate-900 dark:text-white">Community Highlights</h2>
                         </div>
-                    </Card>
+
+                        <Card className="h-auto">
+                            <div className="space-y-6 p-6">
+                                {highlights.map((item) => (
+                                    <div key={item.id} className="flex gap-3">
+                                        <img
+                                            src={item.avatar}
+                                            alt={item.user}
+                                            className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800"
+                                        />
+                                        <div>
+                                            <p className="text-sm text-slate-600 dark:text-slate-300">
+                                                <span className="font-bold text-slate-900 dark:text-white">{item.user}</span> {item.action}
+                                            </p>
+                                            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{item.time}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                                <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
+                                    <p className="text-center text-sm text-slate-500 dark:text-slate-400">
+                                        Join the conversation in <span className="text-primary cursor-pointer hover:underline">#general</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </Card>
+                    </div>
                 </section>
             </div>
         </motion.div >
