@@ -1,5 +1,6 @@
 import React from 'react';
-import logo from '../../assets/logo.png';
+import React from 'react';
+import logo from '../../assets/stride-logo.png';
 
 const Preloader = () => {
     return (

@@ -39,12 +39,19 @@ const Navbar = () => {
                 <button className="lg:hidden text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
                     <Menu size={24} />
                 </button>
+
+                {/* Logo */}
+                <div className="flex items-center gap-2 mr-4">
+                    <img src="/src/assets/stride-logo.png" alt="STRIDE" className="h-10 w-auto md:h-12" />
+                    <span className="hidden md:block text-xl font-bold text-slate-900 dark:text-white tracking-tight">STRIDE</span>
+                </div>
+
                 <div className="relative hidden md:block">
-                    <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                    <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                     <input
                         type="text"
                         placeholder="Search..."
-                        className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full pl-10 pr-4 py-2 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 w-64 transition-colors duration-300"
+                        className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full pl-10 pr-4 py-2 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 w-64 transition-colors duration-300 shadow-sm"
                     />
                 </div>
             </div>

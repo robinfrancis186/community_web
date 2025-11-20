@@ -4,6 +4,7 @@ import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import { useChat } from '../../hooks/useChat';
 import { useAuth } from '../../contexts/AuthContext';
+import PublicProfileModal from '../../components/profile/PublicProfileModal';
 
 const Chat = () => {
     const { user } = useAuth();
@@ -21,6 +22,7 @@ const Chat = () => {
     const [newMessage, setNewMessage] = useState('');
     const [showUserSearch, setShowUserSearch] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedUserProfileId, setSelectedUserProfileId] = useState(null);
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -47,9 +49,6 @@ const Chat = () => {
         try {
             const channelId = await createDm(otherUserId);
             setShowUserSearch(false);
-            // Optionally find and set active channel here, or let the user click it from the list
-            // For better UX, we should probably auto-select it.
-            // Since fetchDms is called in createDm, the new channel should be in the list soon.
         } catch (error) {
             console.error('Failed to start DM', error);
         }
@@ -76,8 +75,8 @@ const Chat = () => {
                             key={channel.id}
                             onClick={() => setActiveChannel(channel)}
                             className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-left ${activeChannel?.id === channel.id
-                                    ? 'bg-primary/10 text-primary'
-                                    : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white'
+                                ? 'bg-primary/10 text-primary'
+                                : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white'
                                 }`}
                         >
                             <Hash size={16} />
@@ -104,8 +103,8 @@ const Chat = () => {
                             key={dm.id}
                             onClick={() => setActiveChannel(dm)}
                             className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-left ${activeChannel?.id === dm.id
-                                    ? 'bg-primary/10 text-primary'
-                                    : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white'
+                                ? 'bg-primary/10 text-primary'
+                                : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white'
                                 }`}
                         >
                             <div className="relative">
@@ -133,11 +132,18 @@ const Chat = () => {
                                 ) : (
                                     <div className="w-2 h-2 rounded-full bg-green-500" />
                                 )}
-                                <h3 className="font-bold text-slate-900 dark:text-white">
+                                <button
+                                    onClick={() => {
+                                        if (activeChannel.type === 'dm' && activeChannel.otherUser?.id) {
+                                            setSelectedUserProfileId(activeChannel.otherUser.id);
+                                        }
+                                    }}
+                                    className={`font-bold text-slate-900 dark:text-white hover:underline ${activeChannel.type === 'dm' ? 'cursor-pointer' : 'cursor-default'}`}
+                                >
                                     {activeChannel.type === 'public'
                                         ? activeChannel.name
                                         : activeChannel.otherUser?.full_name || 'Direct Message'}
-                                </h3>
+                                </button>
                             </div>
                         </div>
 
@@ -152,21 +158,31 @@ const Chat = () => {
                                     const isMe = msg.user_id === user.id;
                                     return (
                                         <div key={msg.id} className={`flex gap-4 group ${isMe ? 'flex-row-reverse' : ''}`}>
-                                            <img
-                                                src={msg.profiles?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${msg.profiles?.full_name || 'User'}`}
-                                                alt={msg.profiles?.full_name}
-                                                className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-600 object-cover flex-shrink-0"
-                                            />
+                                            <button
+                                                onClick={() => !isMe && setSelectedUserProfileId(msg.user_id)}
+                                                className={`${!isMe ? 'cursor-pointer' : ''}`}
+                                            >
+                                                <img
+                                                    src={msg.profiles?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${msg.profiles?.full_name || 'User'}`}
+                                                    alt={msg.profiles?.full_name}
+                                                    className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-600 object-cover flex-shrink-0"
+                                                />
+                                            </button>
                                             <div className={`max-w-[70%] ${isMe ? 'items-end' : 'items-start'} flex flex-col`}>
                                                 <div className="flex items-baseline gap-2 mb-1">
-                                                    <span className="font-bold text-slate-900 dark:text-white text-sm">{msg.profiles?.full_name || 'User'}</span>
+                                                    <span
+                                                        className={`font-bold text-slate-900 dark:text-white text-sm ${!isMe ? 'cursor-pointer hover:underline' : ''}`}
+                                                        onClick={() => !isMe && setSelectedUserProfileId(msg.user_id)}
+                                                    >
+                                                        {msg.profiles?.full_name || 'User'}
+                                                    </span>
                                                     <span className="text-xs text-slate-500 dark:text-slate-400">
                                                         {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                     </span>
                                                 </div>
                                                 <div className={`p-3 rounded-2xl text-sm ${isMe
-                                                        ? 'bg-primary text-white rounded-tr-none'
-                                                        : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-tl-none shadow-sm'
+                                                    ? 'bg-primary text-white rounded-tr-none'
+                                                    : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-tl-none shadow-sm'
                                                     }`}>
                                                     {msg.content}
                                                 </div>
@@ -254,6 +270,13 @@ const Chat = () => {
                     </Card>
                 </div>
             )}
+
+            {/* Public Profile Modal */}
+            <PublicProfileModal
+                userId={selectedUserProfileId}
+                isOpen={!!selectedUserProfileId}
+                onClose={() => setSelectedUserProfileId(null)}
+            />
         </div>
     );
 };

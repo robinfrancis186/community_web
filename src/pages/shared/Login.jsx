@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
 import { Mail, Lock, User, AlertCircle } from 'lucide-react';
 import Button from '../../components/ui/Button';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/stride-logo.png';
 
 const Login = () => {
     const navigate = useNavigate();

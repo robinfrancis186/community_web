@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User, Mail, MapPin, Save, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
+import { User, Mail, MapPin, Save, Loader2, AlertCircle, CheckCircle, Linkedin, Twitter, Github, Globe } from 'lucide-react';
 import AvatarUpload from '../../components/profile/AvatarUpload';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
@@ -18,7 +18,13 @@ const Profile = () => {
         full_name: '',
         email: '',
         campus_id: '',
-        avatar_url: ''
+        avatar_url: '',
+        social_links: {
+            linkedin: '',
+            twitter: '',
+            github: '',
+            website: ''
+        }
     });
 
     // Password Form Data
@@ -35,7 +41,13 @@ const Profile = () => {
                 full_name: profile.full_name || '',
                 email: profile.email || '',
                 campus_id: profile.campus_id || '',
-                avatar_url: profile.avatar_url || ''
+                avatar_url: profile.avatar_url || '',
+                social_links: {
+                    linkedin: profile.social_links?.linkedin || '',
+                    twitter: profile.social_links?.twitter || '',
+                    github: profile.social_links?.github || '',
+                    website: profile.social_links?.website || ''
+                }
             });
         }
         fetchCampuses();
@@ -58,6 +70,18 @@ const Profile = () => {
     const handleGeneralChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+        setMessage({ type: '', text: '' });
+    };
+
+    const handleSocialChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            social_links: {
+                ...prev.social_links,
+                [name]: value
+            }
+        }));
         setMessage({ type: '', text: '' });
     };
 
@@ -101,6 +125,7 @@ const Profile = () => {
                 .update({
                     full_name: formData.full_name,
                     campus_id: formData.campus_id || null,
+                    social_links: formData.social_links,
                     updated_at: new Date().toISOString()
                 })
                 .eq('id', user.id);
@@ -108,8 +133,6 @@ const Profile = () => {
             if (updateError) throw updateError;
 
             setMessage({ type: 'success', text: 'Profile updated successfully!' });
-            // Optional: reload to ensure context is updated if needed, 
-            // but usually context subscription handles it or we can manually update context
         } catch (err) {
             setMessage({ type: 'error', text: err.message || 'Failed to update profile' });
         } finally {
@@ -268,6 +291,76 @@ const Profile = () => {
                                             </option>
                                         ))}
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="border-t border-slate-200 dark:border-slate-700 pt-6">
+                            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Social Links</h3>
+                            <div className="grid gap-6 md:grid-cols-2">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                        LinkedIn URL
+                                    </label>
+                                    <div className="relative">
+                                        <Linkedin className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                                        <input
+                                            type="url"
+                                            name="linkedin"
+                                            value={formData.social_links.linkedin}
+                                            onChange={handleSocialChange}
+                                            className="w-full pl-10 pr-4 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                                            placeholder="https://linkedin.com/in/..."
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                        Twitter URL
+                                    </label>
+                                    <div className="relative">
+                                        <Twitter className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                                        <input
+                                            type="url"
+                                            name="twitter"
+                                            value={formData.social_links.twitter}
+                                            onChange={handleSocialChange}
+                                            className="w-full pl-10 pr-4 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                                            placeholder="https://twitter.com/..."
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                        GitHub URL
+                                    </label>
+                                    <div className="relative">
+                                        <Github className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                                        <input
+                                            type="url"
+                                            name="github"
+                                            value={formData.social_links.github}
+                                            onChange={handleSocialChange}
+                                            className="w-full pl-10 pr-4 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                                            placeholder="https://github.com/..."
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                        Website / Portfolio
+                                    </label>
+                                    <div className="relative">
+                                        <Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                                        <input
+                                            type="url"
+                                            name="website"
+                                            value={formData.social_links.website}
+                                            onChange={handleSocialChange}
+                                            className="w-full pl-10 pr-4 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                                            placeholder="https://..."
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>

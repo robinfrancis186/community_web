@@ -23,6 +23,12 @@ Users can now upload a custom profile picture.
 - **Backend**: Uses Supabase Storage (`avatars` bucket).
 - **Security**: RLS policies ensure users can only modify their own avatars.
 
+### Social Media Links
+Users can add their social media profiles.
+- **Location**: Profile Page -> "General Profile" tab.
+- **Supported**: LinkedIn, Twitter, GitHub, Website.
+- **Visibility**: Displayed on the user's public profile card.
+
 ### Password Change
 A secure form for updating passwords.
 - **Location**: Profile Page -> "Security" tab.
@@ -55,6 +61,11 @@ Users can now start private conversations with other members.
     - **New Message**: "+" button opens a user search modal to start a new DM.
     - **Real-time**: Messages update automatically using Supabase Realtime subscriptions.
 - **Backend**: Uses a `channel_members` table to track DM participants and secure RLS policies.
+
+### Public Profiles
+View other users' details and connect.
+- **Access**: Click on a user's name or avatar in the Chat interface.
+- **Features**: Shows avatar, name, role, campus, and social media links. Includes a "Send Message" button.
 
 ## Verification Steps
 
