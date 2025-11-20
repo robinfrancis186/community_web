@@ -1,7 +1,14 @@
 import React from 'react';
 import { Bell, Search, Menu } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Navbar = () => {
+    const { profile, user } = useAuth();
+
+    // Get display name and role from profile
+    const displayName = profile?.full_name || user?.email?.split('@')[0] || 'User';
+    const displayRole = profile?.role ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1) : 'Member';
+
     return (
         <header className="h-16 bg-surface/80 backdrop-blur-xl border-b border-slate-200 fixed top-0 right-0 left-64 z-40 flex items-center justify-between px-6">
             <div className="flex items-center gap-4">
@@ -26,13 +33,13 @@ const Navbar = () => {
 
                 <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
                     <div className="text-right hidden md:block">
-                        <p className="text-sm font-medium text-slate-900">Alex Johnson</p>
-                        <p className="text-xs text-slate-500">Member</p>
+                        <p className="text-sm font-medium text-slate-900">{displayName}</p>
+                        <p className="text-xs text-slate-500">{displayRole}</p>
                     </div>
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary p-[2px]">
                         <div className="w-full h-full rounded-full bg-surface border-2 border-transparent overflow-hidden">
                             <img
-                                src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex"
+                                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${displayName}`}
                                 alt="Profile"
                                 className="w-full h-full object-cover"
                             />

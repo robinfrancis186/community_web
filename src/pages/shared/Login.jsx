@@ -58,7 +58,7 @@ const Login = () => {
                         .select('role')
                         .eq('id', data.user.id)
                         .single();
-                    
+
                     const role = profileData?.role || 'member';
                     navigate(`/${role}/dashboard`);
                 } else {
@@ -73,21 +73,21 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-background flex items-center justify-center p-6">
+        <div className="min-h-screen bg-gradient-to-br from-primary/5 via-slate-50 to-secondary/5 flex items-center justify-center p-6">
             <div className="max-w-md w-full">
                 <div className="text-center mb-8">
-                    <img src={logo} alt="STRIDE" className="h-16 w-auto mx-auto mb-4" />
+                    <img src={logo} alt="STRIDE" className="h-16 w-auto mx-auto mb-4 drop-shadow-lg" />
                     <h1 className="text-3xl font-bold text-slate-900 mb-2">
-                        Welcome to <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">STRIDE</span>
+                        Welcome to <span className="text-transparent bg-clip-text bg-gradient-primary">STRIDE</span>
                     </h1>
-                    <p className="text-slate-500">
+                    <p className="text-slate-600">
                         {isSignUp ? 'Create your account to get started' : 'Sign in to your account'}
                     </p>
                 </div>
 
-                <div className="bg-surface border border-slate-200 rounded-2xl p-8 shadow-sm">
+                <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-xl">
                     {error && (
-                        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+                        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2">
                             <AlertCircle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
                             <p className="text-sm text-red-600">{error}</p>
                         </div>
@@ -107,7 +107,7 @@ const Login = () => {
                                         value={formData.fullName}
                                         onChange={handleChange}
                                         required={isSignUp}
-                                        className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-slate-900"
+                                        className="w-full pl-10 pr-4 py-2.5 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-slate-900 transition-all"
                                         placeholder="Enter your full name"
                                     />
                                 </div>
@@ -126,7 +126,7 @@ const Login = () => {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-slate-900"
+                                    className="w-full pl-10 pr-4 py-2.5 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-slate-900 transition-all"
                                     placeholder="Enter your email"
                                 />
                             </div>
@@ -145,7 +145,7 @@ const Login = () => {
                                     onChange={handleChange}
                                     required
                                     minLength={6}
-                                    className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-slate-900"
+                                    className="w-full pl-10 pr-4 py-2.5 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-slate-900 transition-all"
                                     placeholder="Enter your password"
                                 />
                             </div>
@@ -160,7 +160,7 @@ const Login = () => {
                                     name="role"
                                     value={formData.role}
                                     onChange={handleChange}
-                                    className="w-full px-4 py-2.5 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-slate-900"
+                                    className="w-full px-4 py-2.5 border-2 border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-slate-900 transition-all"
                                 >
                                     <option value="member">Member (Student/Ambassador)</option>
                                     <option value="campus">Campus Representative</option>

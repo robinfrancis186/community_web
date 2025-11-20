@@ -112,7 +112,7 @@ const Events = () => {
             </div>
 
             {error && (
-                <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+                <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2">
                     <AlertCircle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
                     <p className="text-sm text-red-600">{error}</p>
                 </div>
@@ -127,7 +127,7 @@ const Events = () => {
                     {filteredEvents.map((event) => {
                         const isRegistered = registeredEvents.has(event.id);
                         const isFull = event.max_participants && event.max_participants > 0;
-                        
+
                         return (
                             <Card key={event.id} className="p-0 flex flex-col h-full" hover>
                                 <div className="h-48 relative">
@@ -142,7 +142,7 @@ const Events = () => {
                                         </Badge>
                                     </div>
                                     <div className="absolute bottom-3 left-3">
-                                        <Badge variant="success" className="bg-green-500/90 text-slate-900 border-transparent">
+                                        <Badge gradient variant="success" className="text-white border-transparent shadow-lg">
                                             +{event.points || 0} Points
                                         </Badge>
                                     </div>
@@ -177,8 +177,8 @@ const Events = () => {
                                             Registered
                                         </Button>
                                     ) : (
-                                        <Button 
-                                            variant="primary" 
+                                        <Button
+                                            variant="primary"
                                             className="w-full"
                                             onClick={() => handleRegister(event.id)}
                                             disabled={registering || isFull}

@@ -53,7 +53,7 @@ const Courses = () => {
             </div>
 
             {error && (
-                <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+                <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2">
                     <AlertCircle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
                     <p className="text-sm text-red-600">{error}</p>
                 </div>

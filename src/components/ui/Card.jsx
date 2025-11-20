@@ -1,18 +1,28 @@
 import React from 'react';
 import clsx from 'clsx';
 
-const Card = ({ children, className, hover = false, ...props }) => {
+const Card = ({ children, className, hover = false, glass = false, ...props }) => {
     return (
         <div
             {...props}
             className={clsx(
-                'bg-surface border border-slate-200 rounded-2xl p-6 relative overflow-hidden shadow-sm',
-                hover && 'hover:border-primary/50 hover:shadow-md transition-all duration-300 group',
+                'relative overflow-hidden rounded-2xl p-6',
+                glass
+                    ? 'bg-white/80 backdrop-blur-xl border border-white/20 shadow-glass'
+                    : 'bg-white border border-slate-200 shadow-soft',
+                hover && 'card-hover group cursor-pointer',
                 className
             )}
         >
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {/* Gradient overlay on hover */}
+            {hover && (
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            )}
+
+            {/* Shimmer effect on hover */}
+            {hover && (
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+            )}
 
             <div className="relative z-10">
                 {children}
@@ -22,3 +32,4 @@ const Card = ({ children, className, hover = false, ...props }) => {
 };
 
 export default Card;
+

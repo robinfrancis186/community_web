@@ -69,8 +69,8 @@ const Leaderboard = () => {
     const filteredData = leaderboardData.filter(item => {
         if (!searchQuery) return true;
         const query = searchQuery.toLowerCase();
-        return item.name.toLowerCase().includes(query) || 
-               item.campus.toLowerCase().includes(query);
+        return item.name.toLowerCase().includes(query) ||
+            item.campus.toLowerCase().includes(query);
     });
 
     const topThree = filteredData.slice(0, 3);
@@ -95,17 +95,17 @@ const Leaderboard = () => {
                     <p className="text-slate-500">See who's leading the innovation movement.</p>
                 </div>
 
-                <div className="flex bg-surface p-1 rounded-xl border border-slate-200">
+                <div className="flex bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
                     {['global', 'campus'].map((tab) => (
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
                             disabled={tab === 'campus' && !profile?.campus_id}
                             className={clsx(
-                                'px-4 py-2 rounded-lg text-sm font-medium transition-all capitalize',
+                                'px-6 py-2.5 rounded-lg text-sm font-semibold transition-all capitalize',
                                 activeTab === tab
-                                    ? 'bg-primary text-slate-900 shadow-lg'
-                                    : 'text-slate-500 hover:text-slate-900',
+                                    ? 'bg-gradient-primary text-white shadow-lg shadow-primary/30'
+                                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50',
                                 tab === 'campus' && !profile?.campus_id && 'opacity-50 cursor-not-allowed'
                             )}
                         >
@@ -120,51 +120,51 @@ const Leaderboard = () => {
                 {topThree.length >= 3 && (
                     <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 items-end">
                         {/* 2nd Place */}
-                        <Card className="order-2 md:order-1 bg-gradient-to-b from-surface to-surface/50 border-white/5 flex flex-col items-center p-6 transform md:translate-y-4">
+                        <Card className="order-2 md:order-1 bg-gradient-to-br from-slate-50 to-white border-slate-200 flex flex-col items-center p-6 transform md:translate-y-4 hover">
                             <div className="relative mb-4">
-                                <div className="w-20 h-20 rounded-full border-4 border-gray-400 overflow-hidden">
-                                    <img src={topThree[1].avatar} alt="" className="w-full h-full" />
+                                <div className="w-20 h-20 rounded-full border-4 border-slate-300 overflow-hidden shadow-lg">
+                                    <img src={topThree[1].avatar} alt="" className="w-full h-full object-cover" />
                                 </div>
-                                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gray-400 text-black font-bold w-8 h-8 rounded-full flex items-center justify-center border-2 border-surface">
+                                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-br from-slate-300 to-slate-400 text-white font-bold w-9 h-9 rounded-full flex items-center justify-center border-3 border-white shadow-lg">
                                     2
                                 </div>
                             </div>
                             <h3 className="text-lg font-bold text-slate-900">{topThree[1].name}</h3>
                             <p className="text-sm text-slate-500 mb-2">{topThree[1].campus}</p>
-                            <Badge variant="neutral" className="text-lg px-3 py-1">{topThree[1].points || 0} PTS</Badge>
+                            <Badge variant="neutral" className="text-base font-semibold px-4 py-1.5">{topThree[1].points || 0} PTS</Badge>
                         </Card>
 
                         {/* 1st Place */}
-                        <Card className="order-1 md:order-2 bg-gradient-to-b from-primary/20 to-surface border-primary/30 flex flex-col items-center p-8 relative overflow-visible z-10">
-                            <div className="absolute -top-6 text-yellow-400">
-                                <Trophy size={40} fill="currentColor" />
+                        <Card className="order-1 md:order-2 bg-gradient-to-br from-amber-50 via-yellow-50 to-white border-amber-200 flex flex-col items-center p-8 relative overflow-visible z-10 shadow-xl hover">
+                            <div className="absolute -top-6 text-amber-400 drop-shadow-lg">
+                                <Trophy size={44} fill="currentColor" className="animate-pulse-slow" />
                             </div>
                             <div className="relative mb-4 mt-4">
-                                <div className="w-24 h-24 rounded-full border-4 border-yellow-400 overflow-hidden shadow-[0_0_20px_rgba(250,204,21,0.3)]">
-                                    <img src={topThree[0].avatar} alt="" className="w-full h-full" />
+                                <div className="w-28 h-28 rounded-full border-4 border-amber-400 overflow-hidden shadow-[0_0_30px_rgba(251,191,36,0.5)] ring-4 ring-amber-100">
+                                    <img src={topThree[0].avatar} alt="" className="w-full h-full object-cover" />
                                 </div>
-                                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-yellow-400 text-black font-bold w-8 h-8 rounded-full flex items-center justify-center border-2 border-surface">
+                                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-br from-amber-400 to-yellow-500 text-white font-bold w-10 h-10 rounded-full flex items-center justify-center border-3 border-white shadow-lg">
                                     1
                                 </div>
                             </div>
                             <h3 className="text-xl font-bold text-slate-900">{topThree[0].name}</h3>
-                            <p className="text-sm text-slate-500 mb-2">{topThree[0].campus}</p>
-                            <Badge variant="warning" className="text-xl px-4 py-1 font-bold">{topThree[0].points || 0} PTS</Badge>
+                            <p className="text-sm text-slate-600 mb-3">{topThree[0].campus}</p>
+                            <Badge gradient variant="warning" className="text-lg px-5 py-2 font-bold shadow-lg">{topThree[0].points || 0} PTS</Badge>
                         </Card>
 
                         {/* 3rd Place */}
-                        <Card className="order-3 md:order-3 bg-gradient-to-b from-surface to-surface/50 border-white/5 flex flex-col items-center p-6 transform md:translate-y-8">
+                        <Card className="order-3 md:order-3 bg-gradient-to-br from-orange-50 to-white border-orange-200 flex flex-col items-center p-6 transform md:translate-y-8 hover">
                             <div className="relative mb-4">
-                                <div className="w-20 h-20 rounded-full border-4 border-orange-700 overflow-hidden">
-                                    <img src={topThree[2].avatar} alt="" className="w-full h-full" />
+                                <div className="w-20 h-20 rounded-full border-4 border-orange-400 overflow-hidden shadow-lg">
+                                    <img src={topThree[2].avatar} alt="" className="w-full h-full object-cover" />
                                 </div>
-                                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-orange-700 text-slate-900 font-bold w-8 h-8 rounded-full flex items-center justify-center border-2 border-surface">
+                                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-gradient-to-br from-orange-400 to-orange-500 text-white font-bold w-9 h-9 rounded-full flex items-center justify-center border-3 border-white shadow-lg">
                                     3
                                 </div>
                             </div>
                             <h3 className="text-lg font-bold text-slate-900">{topThree[2].name}</h3>
                             <p className="text-sm text-slate-500 mb-2">{topThree[2].campus}</p>
-                            <Badge variant="neutral" className="text-lg px-3 py-1">{topThree[2].points || 0} PTS</Badge>
+                            <Badge variant="warning" className="text-base font-semibold px-4 py-1.5">{topThree[2].points || 0} PTS</Badge>
                         </Card>
                     </div>
                 )}
@@ -179,7 +179,7 @@ const Leaderboard = () => {
                                 placeholder="Search members..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="bg-slate-100 border border-slate-200 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 w-full"
+                                className="bg-white border-2 border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary w-full transition-all"
                             />
                         </div>
                         <Button variant="outline" icon={Filter}>Filter</Button>
@@ -192,16 +192,16 @@ const Leaderboard = () => {
                     ) : (
                         <div className="space-y-2">
                             {rest.map((user) => (
-                                <div key={user.user_id} className="flex items-center justify-between p-4 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors">
+                                <div key={user.user_id} className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-slate-50 to-white border border-slate-100 hover:border-primary/30 hover:shadow-md transition-all group">
                                     <div className="flex items-center gap-4">
-                                        <span className="text-slate-500 font-bold w-6">{user.rank}</span>
-                                        <img src={user.avatar} alt="" className="w-10 h-10 rounded-full" />
+                                        <span className="text-slate-600 font-bold w-8 text-center">{user.rank}</span>
+                                        <img src={user.avatar} alt="" className="w-11 h-11 rounded-full border-2 border-slate-200 group-hover:border-primary/50 transition-all" />
                                         <div>
-                                            <h4 className="font-bold text-slate-900">{user.name}</h4>
+                                            <h4 className="font-bold text-slate-900 group-hover:text-primary transition-colors">{user.name}</h4>
                                             <p className="text-xs text-slate-500">{user.campus}</p>
                                         </div>
                                     </div>
-                                    <div className="font-bold text-secondary">{user.points || 0} PTS</div>
+                                    <div className="font-bold text-transparent bg-clip-text bg-gradient-secondary">{user.points || 0} PTS</div>
                                 </div>
                             ))}
                         </div>

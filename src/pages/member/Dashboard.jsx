@@ -82,20 +82,20 @@ const Dashboard = () => {
             {/* Welcome Section */}
             <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <motion.div variants={itemVariants} className="lg:col-span-2">
-                    <Card className="bg-gradient-to-br from-primary/20 to-surface border-primary/20">
+                    <Card className="bg-gradient-to-br from-primary/10 via-purple-50 to-white border-primary/20 shadow-lg">
                         <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                             <div className="flex-1">
                                 <h1 className="text-3xl font-bold text-slate-900 mb-2">
                                     Welcome back, {userData.name}! 👋
                                 </h1>
-                                <p className="text-slate-600 mb-6">
-                                    You're doing great! You've earned <span className="text-secondary font-bold">{userData.points} STRIDE Points</span> this month.
+                                <p className="text-slate-700 mb-6">
+                                    You're doing great! You've earned <span className="text-transparent bg-clip-text bg-gradient-secondary font-bold">{userData.points} STRIDE Points</span> this month.
                                 </p>
 
                                 <div className="space-y-2">
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-slate-900 font-medium">Level {userData.level}: {userData.levelName}</span>
-                                        <span className="text-slate-500">{userData.xp} / {userData.nextLevelXp} XP</span>
+                                        <span className="text-slate-900 font-semibold">Level {userData.level}: {userData.levelName}</span>
+                                        <span className="text-slate-600">{userData.xp} / {userData.nextLevelXp} XP</span>
                                     </div>
                                     <ProgressBar progress={userData.xp} max={userData.nextLevelXp} color="secondary" />
                                     <p className="text-xs text-slate-500 mt-1">{userData.nextLevelXp - userData.xp} XP to reach Level {userData.level + 1}</p>
@@ -115,16 +115,16 @@ const Dashboard = () => {
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
-                    <Card className="flex flex-col justify-center space-y-4">
+                    <Card className="flex flex-col justify-center space-y-4 bg-gradient-to-br from-amber-50 to-white border-amber-200 shadow-lg" hover>
                         <h3 className="text-lg font-semibold text-slate-900 flex items-center gap-2">
-                            <Trophy className="text-yellow-400" size={20} />
+                            <Trophy className="text-amber-500" size={22} />
                             Your Rank
                         </h3>
-                        <div className="text-4xl font-bold text-slate-900">
+                        <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-yellow-600">
                             #{userData.rank}
                             <span className="text-base font-normal text-slate-500 ml-2">Global</span>
                         </div>
-                        <div className="flex items-center gap-2 text-green-400 text-sm">
+                        <div className="flex items-center gap-2 text-emerald-600 text-sm font-medium">
                             <TrendingUp size={16} />
                             <span>Top 5% this week</span>
                         </div>
@@ -137,28 +137,28 @@ const Dashboard = () => {
             </section >
 
             {/* Quick Stats Row */}
-            < section className="grid grid-cols-2 md:grid-cols-4 gap-4" >
+            <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {
                     [
-                        { label: 'Events Attended', value: stats.eventsAttended.toString(), icon: Calendar, color: 'text-blue-400' },
-                        { label: 'Badges Earned', value: stats.badgesEarned.toString(), icon: Star, color: 'text-yellow-400' },
-                        { label: 'Courses Completed', value: stats.coursesCompleted.toString(), icon: Target, color: 'text-green-400' },
-                        { label: 'Impact Hours', value: stats.impactHours, icon: Zap, color: 'text-purple-400' },
+                        { label: 'Events Attended', value: stats.eventsAttended.toString(), icon: Calendar, color: 'from-blue-500 to-cyan-500', bgColor: 'bg-blue-50' },
+                        { label: 'Badges Earned', value: stats.badgesEarned.toString(), icon: Star, color: 'from-amber-500 to-yellow-500', bgColor: 'bg-amber-50' },
+                        { label: 'Courses Completed', value: stats.coursesCompleted.toString(), icon: Target, color: 'from-emerald-500 to-green-500', bgColor: 'bg-emerald-50' },
+                        { label: 'Impact Hours', value: stats.impactHours, icon: Zap, color: 'from-purple-500 to-pink-500', bgColor: 'bg-purple-50' },
                     ].map((stat, index) => (
                         <motion.div key={index} variants={itemVariants}>
-                            <Card className="p-4 flex items-center gap-4" hover>
-                                <div className={`p-3 rounded-xl bg-slate-100 ${stat.color}`}>
+                            <Card className="p-5 flex items-center gap-4 bg-white border-slate-200" hover>
+                                <div className={`p-3 rounded-xl bg-gradient-to-br ${stat.color} text-white shadow-lg`}>
                                     <stat.icon size={24} />
                                 </div>
                                 <div>
                                     <div className="text-2xl font-bold text-slate-900">{stat.value}</div>
-                                    <div className="text-xs text-slate-500">{stat.label}</div>
+                                    <div className="text-xs text-slate-600 font-medium">{stat.label}</div>
                                 </div>
                             </Card>
                         </motion.div>
                     ))
                 }
-            </section >
+            </section>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Ongoing Challenges */}
