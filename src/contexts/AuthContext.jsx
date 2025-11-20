@@ -97,44 +97,16 @@ export const AuthProvider = ({ children }) => {
 
             if (error) throw error;
 
-            // Profile is created automatically by database trigger
-            // But if trigger fails, try to create it manually as fallback
-            if (data.user) {
-                // Wait a bit for the trigger to execute
-                await new Promise(resolve => setTimeout(resolve, 500));
+            // Profile is created automatically by database trigger (SECURITY DEFINER bypasses RLS)
+            // Wait for trigger to execute, then fetch profile
+            if (data.user && data.session) {
+                // Wait for the trigger to execute (trigger runs asynchronously after INSERT)
+                // The trigger function runs as SECURITY DEFINER, so it bypasses RLS
+                await new Promise(resolve => setTimeout(resolve, 1500));
                 
-                // Check if profile exists, if not create it manually
-                const { data: existingProfile } = await supabase
-                    .from('profiles')
-                    .select('id')
-                    .eq('id', data.user.id)
-                    .single();
-
-                if (!existingProfile) {
-                    // Fallback: create profile manually if trigger didn't work
-                    const { error: profileError } = await supabase
-                        .from('profiles')
-                        .insert([
-                            {
-                                id: data.user.id,
-                                email: email,
-                                full_name: fullName,
-                                role: role,
-                                xp: 0,
-                                level: 1,
-                            }
-                        ]);
-
-                    if (profileError) {
-                        console.warn('Profile creation fallback failed:', profileError);
-                        // Don't throw here, profile might be created by trigger later
-                    }
-                }
-
-                // If user is confirmed (email confirmation disabled), fetch profile
-                if (data.session) {
-                    await fetchProfile(data.user.id);
-                }
+                // Fetch profile - the trigger should have created it by now
+                // fetchProfile has retry logic built in
+                await fetchProfile(data.user.id);
             }
 
             return { data, error: null };
