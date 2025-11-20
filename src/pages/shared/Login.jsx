@@ -44,20 +44,54 @@ const Login = () => {
 
                 if (error) throw error;
 
-                // Navigate based on role
-                navigate(`/${formData.role}/dashboard`);
+                // Check if email confirmation is required
+                if (data.user && !data.session) {
+                    // Email confirmation required
+                    setError('Account created! Please check your email to confirm your account before signing in.');
+                    setIsSignUp(false);
+                    setFormData({ ...formData, password: '', fullName: '' });
+                    return;
+                }
+
+                // If session exists, user is logged in
+                if (data.session) {
+                    // Wait a moment for profile to be fetched by AuthContext
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                    navigate(`/${formData.role}/dashboard`);
+                } else {
+                    // This shouldn't happen, but handle it gracefully
+                    setError('Account created but session not established. Please try signing in.');
+                    setIsSignUp(false);
+                    setFormData({ ...formData, password: '', fullName: '' });
+                }
             } else {
                 const { data, error } = await signIn(formData.email, formData.password);
 
-                if (error) throw error;
+                if (error) {
+                    // Provide more helpful error messages
+                    if (error.message.includes('Invalid login credentials')) {
+                        throw new Error('Invalid email or password. Please check your credentials and try again.');
+                    } else if (error.message.includes('Email not confirmed')) {
+                        throw new Error('Please check your email and confirm your account before signing in.');
+                    } else {
+                        throw error;
+                    }
+                }
+
+                // Wait for profile to be fetched by AuthContext
+                await new Promise(resolve => setTimeout(resolve, 500));
 
                 // Fetch profile to get role for redirect
                 if (data?.user) {
-                    const { data: profileData } = await supabase
+                    const { data: profileData, error: profileError } = await supabase
                         .from('profiles')
                         .select('role')
                         .eq('id', data.user.id)
                         .single();
+
+                    if (profileError && profileError.code !== 'PGRST116') {
+                        console.error('Error fetching profile:', profileError);
+                    }
 
                     const role = profileData?.role || 'member';
                     navigate(`/${role}/dashboard`);

@@ -43,16 +43,39 @@ export const AuthProvider = ({ children }) => {
 
     const fetchProfile = async (userId) => {
         try {
+            setLoading(true);
             const { data, error } = await supabase
                 .from('profiles')
                 .select('*')
                 .eq('id', userId)
                 .single();
 
-            if (error) throw error;
-            setProfile(data);
+            if (error) {
+                // If profile doesn't exist, it might be created by trigger soon
+                // Wait a bit and retry once
+                if (error.code === 'PGRST116') {
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    const { data: retryData, error: retryError } = await supabase
+                        .from('profiles')
+                        .select('*')
+                        .eq('id', userId)
+                        .single();
+                    
+                    if (retryError) {
+                        console.error('Error fetching profile after retry:', retryError.message);
+                        setProfile(null);
+                    } else {
+                        setProfile(retryData);
+                    }
+                } else {
+                    throw error;
+                }
+            } else {
+                setProfile(data);
+            }
         } catch (error) {
             console.error('Error fetching profile:', error.message);
+            setProfile(null);
         } finally {
             setLoading(false);
         }
@@ -67,32 +90,56 @@ export const AuthProvider = ({ children }) => {
                     data: {
                         full_name: fullName,
                         role: role,
-                    }
+                    },
+                    emailRedirectTo: `${window.location.origin}/login`
                 }
             });
 
             if (error) throw error;
 
-            // Create profile entry
+            // Profile is created automatically by database trigger
+            // But if trigger fails, try to create it manually as fallback
             if (data.user) {
-                const { error: profileError } = await supabase
+                // Wait a bit for the trigger to execute
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                // Check if profile exists, if not create it manually
+                const { data: existingProfile } = await supabase
                     .from('profiles')
-                    .insert([
-                        {
-                            id: data.user.id,
-                            email: email,
-                            full_name: fullName,
-                            role: role,
-                            xp: 0,
-                            level: 1,
-                        }
-                    ]);
+                    .select('id')
+                    .eq('id', data.user.id)
+                    .single();
 
-                if (profileError) throw profileError;
+                if (!existingProfile) {
+                    // Fallback: create profile manually if trigger didn't work
+                    const { error: profileError } = await supabase
+                        .from('profiles')
+                        .insert([
+                            {
+                                id: data.user.id,
+                                email: email,
+                                full_name: fullName,
+                                role: role,
+                                xp: 0,
+                                level: 1,
+                            }
+                        ]);
+
+                    if (profileError) {
+                        console.warn('Profile creation fallback failed:', profileError);
+                        // Don't throw here, profile might be created by trigger later
+                    }
+                }
+
+                // If user is confirmed (email confirmation disabled), fetch profile
+                if (data.session) {
+                    await fetchProfile(data.user.id);
+                }
             }
 
             return { data, error: null };
         } catch (error) {
+            console.error('Signup error:', error);
             return { data: null, error };
         }
     };
@@ -105,8 +152,17 @@ export const AuthProvider = ({ children }) => {
             });
 
             if (error) throw error;
+
+            // Wait for session to be established and fetch profile
+            if (data.user) {
+                // Wait a bit for session to be fully established
+                await new Promise(resolve => setTimeout(resolve, 300));
+                await fetchProfile(data.user.id);
+            }
+
             return { data, error: null };
         } catch (error) {
+            console.error('Signin error:', error);
             return { data: null, error };
         }
     };
