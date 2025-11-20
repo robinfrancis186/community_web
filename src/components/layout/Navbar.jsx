@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Bell, Search, Menu, Sun, Moon } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
 import { supabase } from '../../lib/supabase';
@@ -34,7 +35,7 @@ const Navbar = () => {
     }, [profile?.avatar_url, defaultAvatar]);
 
     return (
-        <header className="h-16 bg-surface/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 fixed top-0 right-0 left-64 z-40 flex items-center justify-between px-6 transition-colors duration-300">
+        <header className="h-20 bg-surface/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 fixed top-0 right-0 left-64 z-40 flex items-center justify-between px-6 transition-colors duration-300">
             <div className="flex items-center gap-4">
                 <button className="lg:hidden text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
                     <Menu size={24} />
@@ -42,8 +43,8 @@ const Navbar = () => {
 
                 {/* Logo */}
                 <div className="flex items-center gap-2 mr-4">
-                    <img src="/src/assets/stride-logo.png" alt="STRIDE" className="h-10 w-auto md:h-12" />
-                    <span className="hidden md:block text-xl font-bold text-slate-900 dark:text-white tracking-tight">STRIDE</span>
+                    <img src="/src/assets/stride-logo.png" alt="STRIDE" className="h-14 w-auto md:h-16" />
+                    <span className="hidden md:block text-2xl font-bold text-slate-900 dark:text-white tracking-tight">STRIDE</span>
                 </div>
 
                 <div className="relative hidden md:block">
@@ -69,10 +70,10 @@ const Navbar = () => {
                     <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
                 </button>
 
-                <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
+                <Link to="/member/profile" className="flex items-center gap-3 pl-4 border-l border-slate-200 hover:opacity-80 transition-opacity">
                     <div className="text-right hidden md:block">
-                        <p className="text-sm font-medium text-slate-900">{displayName}</p>
-                        <p className="text-xs text-slate-500">{displayRole}</p>
+                        <p className="text-sm font-medium text-slate-900 dark:text-white">{displayName}</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">{displayRole}</p>
                     </div>
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary p-[2px]">
                         <div className="w-full h-full rounded-full bg-surface border-2 border-transparent overflow-hidden">
@@ -83,7 +84,7 @@ const Navbar = () => {
                             />
                         </div>
                     </div>
-                </div>
+                </Link>
             </div>
         </header>
     );

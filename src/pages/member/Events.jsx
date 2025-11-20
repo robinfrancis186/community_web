@@ -82,7 +82,7 @@ const Events = () => {
             <div className="flex items-center justify-center min-h-[400px]">
                 <div className="text-center">
                     <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto mb-4" />
-                    <p className="text-slate-500">Loading events...</p>
+                    <p className="text-slate-500 dark:text-slate-400">Loading events...</p>
                 </div>
             </div>
         );
@@ -92,8 +92,8 @@ const Events = () => {
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-900 mb-2">Events & Opportunities</h1>
-                    <p className="text-slate-500">Join workshops, hackathons, and sessions to earn points.</p>
+                    <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Events & Opportunities</h1>
+                    <p className="text-slate-500 dark:text-slate-400">Join workshops, hackathons, and sessions to earn points.</p>
                 </div>
 
                 <div className="flex gap-2 flex-wrap">
@@ -112,15 +112,15 @@ const Events = () => {
             </div>
 
             {error && (
-                <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2">
-                    <AlertCircle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
-                    <p className="text-sm text-red-600">{error}</p>
+                <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl flex items-start gap-2">
+                    <AlertCircle className="text-red-500 dark:text-red-400 flex-shrink-0 mt-0.5" size={18} />
+                    <p className="text-sm text-red-600 dark:text-red-300">{error}</p>
                 </div>
             )}
 
             {filteredEvents.length === 0 ? (
                 <Card className="p-12 text-center">
-                    <p className="text-slate-500">No events found. Check back later!</p>
+                    <p className="text-slate-500 dark:text-slate-400">No events found. Check back later!</p>
                 </Card>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -137,7 +137,7 @@ const Events = () => {
                                         className="w-full h-full object-cover"
                                     />
                                     <div className="absolute top-3 right-3">
-                                        <Badge variant="neutral" className="bg-black/50 backdrop-blur-md border-transparent capitalize">
+                                        <Badge variant="neutral" className="bg-black/50 backdrop-blur-md border-transparent capitalize text-white">
                                             {event.event_type}
                                         </Badge>
                                     </div>
@@ -149,23 +149,23 @@ const Events = () => {
                                 </div>
 
                                 <div className="p-5 flex-1 flex flex-col">
-                                    <h3 className="text-xl font-bold text-slate-900 mb-3">{event.title}</h3>
+                                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{event.title}</h3>
 
                                     <div className="space-y-3 mb-6 flex-1">
-                                        <div className="flex items-center gap-3 text-slate-500 text-sm">
+                                        <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400 text-sm">
                                             <Calendar size={16} className="text-primary" />
                                             <span>{formatDate(event.start_date)}</span>
                                         </div>
-                                        <div className="flex items-center gap-3 text-slate-500 text-sm">
+                                        <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400 text-sm">
                                             <Clock size={16} className="text-primary" />
                                             <span>{formatTime(event.start_date)}</span>
                                         </div>
-                                        <div className="flex items-center gap-3 text-slate-500 text-sm">
+                                        <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400 text-sm">
                                             <MapPin size={16} className="text-primary" />
                                             <span>{event.location || 'TBA'}</span>
                                         </div>
                                         {event.max_participants && (
-                                            <div className="flex items-center gap-3 text-slate-500 text-sm">
+                                            <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400 text-sm">
                                                 <Users size={16} className="text-primary" />
                                                 <span>Max {event.max_participants} participants</span>
                                             </div>

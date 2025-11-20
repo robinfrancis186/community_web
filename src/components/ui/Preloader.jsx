@@ -7,20 +7,20 @@ const Preloader = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
             <div className="relative flex flex-col items-center">
                 {/* Logo Container */}
-                <div className="relative w-24 h-24 mb-4">
+                <div className="relative w-32 h-32 mb-6">
                     {/* Pulsing Circle Background */}
                     <div className="absolute inset-0 bg-primary/20 rounded-full animate-ping"></div>
                     <div className="absolute inset-0 bg-primary/10 rounded-full animate-pulse delay-75"></div>
 
                     {/* Logo Image (Using text for now if image not available, or placeholder) */}
-                    <div className="relative z-10 w-full h-full flex items-center justify-center bg-white dark:bg-slate-800 rounded-full shadow-xl border-4 border-white dark:border-slate-700 overflow-hidden">
-                        <img src={logo} alt="STRIDE" className="w-16 h-16 object-contain" />
+                    <div className="relative z-10 w-full h-full flex items-center justify-center bg-white dark:bg-slate-800 rounded-full shadow-xl border-4 border-white dark:border-slate-700 overflow-hidden p-4">
+                        <img src={logo} alt="STRIDE" className="w-full h-full object-contain" />
                     </div>
                 </div>
 
                 {/* Loading Text */}
                 <div className="flex flex-col items-center gap-2">
-                    <h2 className="text-2xl font-bold text-slate-800 dark:text-white tracking-tight">
+                    <h2 className="text-3xl font-bold text-slate-800 dark:text-white tracking-tight">
                         STRIDE
                     </h2>
                     <div className="flex gap-1">
