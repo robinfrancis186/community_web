@@ -1,15 +1,18 @@
 import React from 'react';
-import { Users, Calendar, TrendingUp, Award, Activity } from 'lucide-react';
+import { Users, Calendar, TrendingUp, Award, Activity, Loader2 } from 'lucide-react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import Badge from '../../components/ui/Badge';
+import { useCampusStats } from '../../hooks/useCampus';
 
 const Dashboard = () => {
+    const { totalMembers, impactScore, eventsHosted, certificatesIssued, loading } = useCampusStats();
+
     const stats = [
-        { label: 'Total Members', value: '1,240', icon: Users, color: 'text-blue-400', change: '+12%' },
-        { label: 'Impact Score', value: '850', icon: Activity, color: 'text-green-400', change: '+5%' },
-        { label: 'Events Hosted', value: '24', icon: Calendar, color: 'text-purple-400', change: '+2' },
-        { label: 'Certificates Issued', value: '156', icon: Award, color: 'text-yellow-400', change: '+18%' },
+        { label: 'Total Members', value: totalMembers.toLocaleString(), icon: Users, color: 'text-blue-400', change: '+12%' },
+        { label: 'Impact Score', value: impactScore.toLocaleString(), icon: Activity, color: 'text-green-400', change: '+5%' },
+        { label: 'Events Hosted', value: eventsHosted.toLocaleString(), icon: Calendar, color: 'text-purple-400', change: '+2' },
+        { label: 'Certificates Issued', value: certificatesIssued.toLocaleString(), icon: Award, color: 'text-yellow-400', change: '+18%' },
     ];
 
     const recentActivity = [
@@ -18,12 +21,20 @@ const Dashboard = () => {
         { user: 'Alex Johnson', action: 'completed', target: 'Accessibility Quiz', time: '2h ago' },
     ];
 
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-[400px]">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+        );
+    }
+
     return (
         <div className="space-y-8">
             <div className="flex justify-between items-center">
                 <div>
                     <h1 className="text-3xl font-bold text-slate-900 mb-2">Campus Dashboard</h1>
-                    <p className="text-slate-500">Overview of GEC Barton Hill's performance.</p>
+                    <p className="text-slate-500">Overview of your campus performance.</p>
                 </div>
                 <Button variant="primary" icon={Calendar}>Create Event</Button>
             </div>

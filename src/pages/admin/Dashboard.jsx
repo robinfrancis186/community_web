@@ -1,15 +1,26 @@
 import React from 'react';
-import { Users, Globe, TrendingUp, Activity, Map } from 'lucide-react';
+import { Users, Globe, TrendingUp, Activity, Map, Loader2 } from 'lucide-react';
 import Card from '../../components/ui/Card';
 import Badge from '../../components/ui/Badge';
+import { useAdminStats } from '../../hooks/useAdmin';
 
 const Dashboard = () => {
+    const { totalUsers, activeCampuses, totalImpactHours, projects, loading } = useAdminStats();
+
     const stats = [
-        { label: 'Total Users', value: '12,450', icon: Users, color: 'text-blue-400', change: '+8%' },
-        { label: 'Active Campuses', value: '42', icon: Globe, color: 'text-green-400', change: '+3' },
-        { label: 'Total Impact Hours', value: '45,200', icon: Activity, color: 'text-purple-400', change: '+15%' },
-        { label: 'Designathon Projects', value: '320', icon: TrendingUp, color: 'text-yellow-400', change: '+24%' },
+        { label: 'Total Users', value: totalUsers.toLocaleString(), icon: Users, color: 'text-blue-400', change: '+8%' },
+        { label: 'Active Campuses', value: activeCampuses.toLocaleString(), icon: Globe, color: 'text-green-400', change: '+3' },
+        { label: 'Total Impact Hours', value: totalImpactHours.toLocaleString(), icon: Activity, color: 'text-purple-400', change: '+15%' },
+        { label: 'Designathon Projects', value: projects.toLocaleString(), icon: TrendingUp, color: 'text-yellow-400', change: '+24%' },
     ];
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-[400px]">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8">

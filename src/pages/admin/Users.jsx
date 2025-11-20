@@ -1,66 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { Search, Filter, MoreVertical, Shield, Loader2, AlertCircle } from 'lucide-react';
+import React from 'react';
+import { Search, Filter, MoreVertical, Shield, Loader2, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
 import Badge from '../../components/ui/Badge';
-import { supabase } from '../../lib/supabase';
+import { useAdminUsers } from '../../hooks/useAdminUsers';
 
 const Users = () => {
-    const [users, setUsers] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [error, setError] = useState('');
-
-    useEffect(() => {
-        fetchUsers();
-    }, []);
-
-    const fetchUsers = async () => {
-        try {
-            setLoading(true);
-            const { data, error: fetchError } = await supabase
-                .from('profiles')
-                .select(`
-                    *,
-                    campuses:campus_id (
-                        id,
-                        name
-                    )
-                `)
-                .order('created_at', { ascending: false });
-
-            if (fetchError) throw fetchError;
-            setUsers(data || []);
-        } catch (err) {
-            setError(err.message || 'Failed to fetch users');
-        } finally {
-            setLoading(false);
-        }
-    };
+    const {
+        users,
+        loading,
+        error,
+        page,
+        setPage,
+        totalPages,
+        searchTerm,
+        setSearchTerm,
+        roleFilter,
+        setRoleFilter,
+        updateUserRole
+    } = useAdminUsers();
 
     const handleRoleChange = async (userId, newRole) => {
-        try {
-            const { error } = await supabase
-                .from('profiles')
-                .update({ role: newRole })
-                .eq('id', userId);
-
-            if (error) throw error;
-            await fetchUsers();
-        } catch (err) {
-            setError(err.message || 'Failed to update role');
+        const result = await updateUserRole(userId, newRole);
+        if (!result.success) {
+            // Error is handled in the hook state if needed, or we can show a toast
+            console.error('Failed to update role');
         }
     };
 
-    const filteredUsers = users.filter(user => {
-        if (!searchQuery) return true;
-        const query = searchQuery.toLowerCase();
-        return user.full_name?.toLowerCase().includes(query) ||
-            user.email?.toLowerCase().includes(query) ||
-            user.role?.toLowerCase().includes(query);
-    });
-
-    if (loading) {
+    if (loading && users.length === 0) {
         return (
             <div className="flex items-center justify-center min-h-[400px]">
                 <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -76,14 +44,23 @@ const Users = () => {
                     <p className="text-slate-500">Manage roles and permissions across the platform.</p>
                 </div>
                 <div className="flex gap-2">
-                    <Button variant="outline" icon={Filter}>Filter</Button>
+                    <select
+                        value={roleFilter}
+                        onChange={(e) => setRoleFilter(e.target.value)}
+                        className="px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                        <option value="all">All Roles</option>
+                        <option value="member">Member</option>
+                        <option value="campus">Campus</option>
+                        <option value="admin">Admin</option>
+                    </select>
                 </div>
             </div>
 
             {error && (
                 <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2">
                     <AlertCircle className="text-red-500 flex-shrink-0 mt-0.5" size={18} />
-                    <p className="text-sm text-red-600">{error}</p>
+                    <p className="text-sm text-red-600">{error.message || 'An error occurred'}</p>
                 </div>
             )}
 
@@ -94,8 +71,8 @@ const Users = () => {
                         <input
                             type="text"
                             placeholder="Search users..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                             className="bg-white border-2 border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary w-full md:w-80 transition-all"
                         />
                     </div>
@@ -114,18 +91,26 @@ const Users = () => {
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-200">
-                            {filteredUsers.length === 0 ? (
+                            {users.length === 0 ? (
                                 <tr>
                                     <td colSpan={6} className="p-8 text-center text-slate-500">
-                                        {searchQuery ? 'No users found' : 'No users yet'}
+                                        {searchTerm ? 'No users found' : 'No users yet'}
                                     </td>
                                 </tr>
                             ) : (
-                                filteredUsers.map((user) => (
+                                users.map((user) => (
                                     <tr key={user.id} className="hover:bg-slate-100 transition-colors">
                                         <td className="p-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-full bg-slate-200" />
+                                                <div className="w-8 h-8 rounded-full bg-slate-200 overflow-hidden">
+                                                    {user.avatar_url ? (
+                                                        <img src={user.avatar_url} alt={user.full_name} className="w-full h-full object-cover" />
+                                                    ) : (
+                                                        <div className="w-full h-full flex items-center justify-center bg-slate-300 text-slate-500 font-bold">
+                                                            {user.full_name?.charAt(0) || '?'}
+                                                        </div>
+                                                    )}
+                                                </div>
                                                 <div>
                                                     <div className="font-medium text-slate-900">{user.full_name || 'Anonymous'}</div>
                                                     <div className="text-xs text-slate-500">{user.email}</div>
@@ -156,6 +141,33 @@ const Users = () => {
                             )}
                         </tbody>
                     </table>
+                </div>
+
+                {/* Pagination */}
+                <div className="p-4 border-t border-slate-200 flex items-center justify-between">
+                    <p className="text-sm text-slate-500">
+                        Page {page} of {totalPages}
+                    </p>
+                    <div className="flex gap-2">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setPage(p => Math.max(1, p - 1))}
+                            disabled={page === 1}
+                            icon={ChevronLeft}
+                        >
+                            Previous
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                            disabled={page === totalPages}
+                            icon={ChevronRight}
+                        >
+                            Next
+                        </Button>
+                    </div>
                 </div>
             </Card>
         </div>
