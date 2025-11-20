@@ -21,6 +21,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
       - name: Install and Build
         run: |
           npm ci
@@ -28,6 +34,9 @@ jobs:
         env:
           VITE_SUPABASE_URL: https://nkicjdtfdoanooelohwz.supabase.co
           VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5raWNqZHRmZG9hbm9vZWxvaHd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1Njk3OTAsImV4cCI6MjA3OTE0NTc5MH0.WqvNF0qbBiv-U3mQ-EOqdJ0W9OJLjZYzLyRtkIqFh4Q
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
