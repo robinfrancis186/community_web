@@ -17,25 +17,42 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Check active sessions and sets the user
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setUser(session?.user ?? null);
+        const mockUser = {
+            id: 'mock-user-id',
+            email: 'demo@stride.com',
+            aud: 'authenticated',
+            role: 'authenticated',
+        };
+
+        const mockProfile = {
+            id: 'mock-user-id',
+            full_name: 'Demo User',
+            role: 'member',
+            avatar_url: null,
+            email: 'demo@stride.com',
+        };
+
+        const handleSession = (session) => {
             if (session?.user) {
+                setUser(session.user);
                 fetchProfile(session.user.id);
             } else {
+                // Use mock user instead of null to bypass login
+                console.log("Using Mock User for dev/demo");
+                setUser(mockUser);
+                setProfile(mockProfile);
                 setLoading(false);
             }
+        };
+
+        // Check active sessions and sets the user
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            handleSession(session);
         });
 
         // Listen for changes on auth state (sign in, sign out, etc.)
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            setUser(session?.user ?? null);
-            if (session?.user) {
-                fetchProfile(session.user.id);
-            } else {
-                setProfile(null);
-                setLoading(false);
-            }
+            handleSession(session);
         });
 
         return () => subscription.unsubscribe();
@@ -60,7 +77,7 @@ export const AuthProvider = ({ children }) => {
                         .select('*')
                         .eq('id', userId)
                         .single();
-                    
+
                     if (retryError) {
                         console.error('Error fetching profile after retry:', retryError.message);
                         setProfile(null);
@@ -103,7 +120,7 @@ export const AuthProvider = ({ children }) => {
                 // Wait for the trigger to execute (trigger runs asynchronously after INSERT)
                 // The trigger function runs as SECURITY DEFINER, so it bypasses RLS
                 await new Promise(resolve => setTimeout(resolve, 1500));
-                
+
                 // Fetch profile - the trigger should have created it by now
                 // fetchProfile has retry logic built in
                 await fetchProfile(data.user.id);

@@ -5,7 +5,6 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/layout/Layout';
 
 // Shared pages
-import Login from './pages/shared/Login';
 import Chat from './pages/shared/Chat';
 
 // Member pages
@@ -44,13 +43,12 @@ function AppContent() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
         <Route path="/" element={
           <ProtectedRoute>
             <Layout />
           </ProtectedRoute>
         }>
-          <Route index element={<Navigate to="/login" replace />} />
+          <Route index element={<Navigate to="/member/dashboard" replace />} />
           <Route path="member">
             <Route path="dashboard" element={<MemberDashboard />} />
             <Route path="events" element={<MemberEvents />} />

@@ -32,7 +32,8 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
     }
 
     if (!user) {
-        return <Navigate to="/login" replace />;
+        // Fall back to the default dashboard instead of login (login removed)
+        return <Navigate to="/member/dashboard" replace />;
     }
 
     if (allowedRoles.length > 0 && profile && !allowedRoles.includes(profile.role)) {
